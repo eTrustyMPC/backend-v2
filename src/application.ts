@@ -1,16 +1,20 @@
-import {BootMixin} from '@loopback/boot';
-import {ApplicationConfig} from '@loopback/core';
+import { BootMixin } from '@loopback/boot';
+import { ApplicationConfig } from '@loopback/core';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
-import {ServiceMixin} from '@loopback/service-proxy';
+import { RepositoryMixin } from '@loopback/repository';
+import { RestApplication } from '@loopback/rest';
+import { ServiceMixin } from '@loopback/service-proxy';
 import path from 'path';
-import {MySequence} from './sequence';
+import { MySequence } from './sequence';
+// CUSTOM MODULES
+import { CrudRestComponent } from '@loopback/rest-crud';
+// @see https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
+import { MigrationComponent } from "loopback4-migration";
 
-export {ApplicationConfig};
+export { ApplicationConfig };
 
 export class ETrustyApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
@@ -29,6 +33,10 @@ export class ETrustyApplication extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
+
+    this.component(CrudRestComponent);
+    // Bind migration component related elements
+    this.component(MigrationComponent);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
