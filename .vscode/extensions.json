@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "davidanson.vscode-markdownlint",
+    "mikestead.dotenv",
+    "irongeek.vscode-env",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-typescript-next",
+    "mermaidchart.vscode-mermaid-chart",
+    "statelyai.stately-vscode",
+    "davidwang.ini-for-vscode",
+    "lkrms.inifmt",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}

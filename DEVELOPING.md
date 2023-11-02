@@ -3,14 +3,16 @@
 We use Visual Studio Code for developing LoopBack and recommend the same to our
 users.
 
-## VSCode setup
+## VSCode Setup
 
 Install the following extensions:
 
- - [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
- - [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-## Development workflow
+## Local Environment  Setup
+
+## Development Workflow
 
 ### Visual Studio Code
 
@@ -23,7 +25,7 @@ Install the following extensions:
    errors will be shown in VSCode's "PROBLEMS" window. Failed tests are printed
    to terminal output only.
 
-### Other editors/IDEs
+### Other Editors/IDEs
 
 1. Open a new terminal window/tab and start the continuous build process via
    `npm run build:watch`. It will run TypeScript compiler in watch mode,
@@ -34,3 +36,25 @@ Install the following extensions:
    suite and lint the code for both programming and style errors. You should run
    this command manually whenever you have new changes to test. Test failures
    and linter errors will be printed to the terminal.
+
+## Gitflow
+
+Each task must have a dedicated branch, forked from latest `dev` branch. Each completed task must be merged back to `dev` branch.
+
+All commits must follow [Conventional Commits](https://www.conventionalcommits.org/en) standard.
+
+Each commit must be performed using [commitizen cli](https://commitizen-tools.github.io/commitizen/):
+
+```sh
+npm run commit
+```
+
+### Publishing Release
+
+Each release must be performed using npm command:
+
+```sh
+npm run release
+```
+
+All releases are published into `main` branch.

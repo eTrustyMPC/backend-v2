@@ -1,4 +1,4 @@
-# etrusty-backend-v2
+# eTrusty Backend (v2)
 
 This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
 [initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
@@ -26,7 +26,7 @@ npm start
 
 You can also run `node .` to skip the build step.
 
-Open http://127.0.0.1:3000 in your browser.
+Open <http://127.0.0.1:3000> in your browser.
 
 ## Rebuild the project
 
@@ -76,7 +76,7 @@ understand how you can continue to add features to this application.
 
 ## Modules
 
- - CRUD API: https://www.npmjs.com/package/loopback-component-crud
- - REST CRUD: https://github.com/loopbackio/loopback-next/tree/master/packages/rest-cru
- - Third Web Supabase Auth: https://github.com/thirdweb-example/thirdweb-auth-supabase
- - mIGRATION: https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
+- CRUD API: <https://www.npmjs.com/package/loopback-component-crud>
+- REST CRUD: <https://github.com/loopbackio/loopback-next/tree/master/packages/rest-cru>
+- Third Web Supabase Auth: <https://github.com/thirdweb-example/thirdweb-auth-supabase>
+- Migration: <https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention>
