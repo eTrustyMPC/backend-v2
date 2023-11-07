@@ -1,3 +1,11 @@
+// @see https://github.com/loopbackio/loopback-next/tree/master/examples/todo-jwt
+// @see https://www.npmjs.com/package/loopback4-authentication
+import {AuthenticationComponent} from '@loopback/authentication';
+import {
+  JWTAuthenticationComponent,
+  MyUserService,
+  UserServiceBindings,
+} from '@loopback/authentication-jwt';
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
@@ -8,6 +16,7 @@ import {
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
+import {DbDataSource} from './datasources';
 // CUSTOM MODULES
 import {CrudRestComponent} from '@loopback/rest-crud';
 // @see https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
@@ -34,6 +43,7 @@ export class ETrustyApplication extends BootMixin(
     this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
     });
+
     // Load components
     this.component(RestExplorerComponent);
     this.component(CrudRestComponent);
@@ -44,6 +54,15 @@ export class ETrustyApplication extends BootMixin(
      *   .to({strategyNames: ['jwt', 'header', 'query']});
      */
     this.component(MultiTenancyComponent);
+    // Mount authentication system
+    this.component(AuthenticationComponent);
+    // Mount jwt component
+    this.component(JWTAuthenticationComponent);
+    // Bind datasource
+    this.dataSource(DbDataSource, UserServiceBindings.DATASOURCE_NAME);
+
+    this.bind(UserServiceBindings.USER_SERVICE).toClass(MyUserService);
+
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

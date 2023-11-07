@@ -1,7 +1,10 @@
-import {Entity, model, property} from '@loopback/repository';
+import {
+  User as JwtUser
+} from '@loopback/authentication-jwt';
+import {model, property} from '@loopback/repository';
 
 @model()
-export class User extends Entity {
+export class User extends JwtUser {
   @property({
     type: 'string',
   })
@@ -9,16 +12,9 @@ export class User extends Entity {
 
   @property({
     type: 'string',
-    id: true,
-    generated: true,
-  })
-  id?: string;
-
-  @property({
-    type: 'string',
     required: true,
   })
-  name: string;
+  name?: string;
 
   constructor(data?: Partial<User>) {
     super(data);
