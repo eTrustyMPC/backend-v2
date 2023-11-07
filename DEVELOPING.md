@@ -9,8 +9,35 @@ Install the following extensions:
 
 - [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 - [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
 
-## Local Environment  Setup
+Rules for markdown formatting: <https://github.com/DavidAnson/vscode-markdownlint#rules>
+
+## Local Environment Setup
+
+### Database
+
+Install latest Postgres or run it using Docker:
+
+```sh
+docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+```
+
+### Third Web Engine
+
+Docs: <https://portal.thirdweb.com/engine>
+
+```sh
+docker run --name thirdweb_engine \
+  -e THIRDWEB_API_SECRET_KEY="" \
+  -e ADMIN_WALLET_ADDRESS="" \
+  -e POSTGRES_CONNECTION_URL="postgresql://postgres:postgres@host.docker.internal:5432/postgres?sslmode=disable" \
+  -e ENABLE_HTTPS=true \
+  -p 3005:3005 \
+  --pull=always \
+  --cpus="0.5" \
+  thirdweb/engine:latest
+```
 
 ## Development Workflow
 
