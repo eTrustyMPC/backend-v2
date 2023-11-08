@@ -1,15 +1,10 @@
-// Copyright IBM Corp. and LoopBack contributors 2020. All Rights Reserved.
-// Node module: @loopback/example-multi-tenancy
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
 import {
   Binding,
   Component,
   createBindingFromClass,
   extensionFor,
 } from '@loopback/core';
-import {MultiTenancyBindings, MULTI_TENANCY_STRATEGIES} from './keys';
+import {MULTI_TENANCY_STRATEGIES, MultiTenancyBindings} from './keys';
 import {MultiTenancyMiddlewareProvider} from './middleware/multi-tenancy-middleware.provider';
 import {
   HeaderStrategy,

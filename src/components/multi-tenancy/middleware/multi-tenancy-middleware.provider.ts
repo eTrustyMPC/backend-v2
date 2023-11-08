@@ -1,8 +1,3 @@
-// Copyright IBM Corp. and LoopBack contributors 2020. All Rights Reserved.
-// Node module: @loopback/example-multi-tenancy
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
 import {
   config,
   ContextTags,
@@ -13,7 +8,7 @@ import {
 } from '@loopback/core';
 import {asMiddleware, Middleware, RequestContext} from '@loopback/rest';
 import debugFactory from 'debug';
-import {MultiTenancyBindings, MULTI_TENANCY_STRATEGIES} from '../keys';
+import {MULTI_TENANCY_STRATEGIES, MultiTenancyBindings} from '../keys';
 import {MultiTenancyMiddlewareOptions, MultiTenancyStrategy} from '../types';
 const debug = debugFactory('loopback:multi-tenancy');
 /**
@@ -39,7 +34,7 @@ export class MultiTenancyMiddlewareProvider implements Provider<Middleware> {
     private options: MultiTenancyMiddlewareOptions = {
       strategyNames: ['header'],
     },
-  ) {}
+  ) { }
 
   value(): Middleware {
     return async (ctx, next) => {

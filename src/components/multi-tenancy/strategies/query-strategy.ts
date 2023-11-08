@@ -1,8 +1,3 @@
-// Copyright IBM Corp. and LoopBack contributors 2020. All Rights Reserved.
-// Node module: @loopback/example-multi-tenancy
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
 import {RequestContext} from '@loopback/rest';
 import debugFactory from 'debug';
 import {MultiTenancyStrategy} from '../types';
@@ -15,8 +10,7 @@ const debug = debugFactory('loopback:multi-tenancy:strategy:query');
  */
 export class QueryStrategy
   extends BaseStrategy
-  implements MultiTenancyStrategy
-{
+  implements MultiTenancyStrategy {
   name = 'query';
 
   identifyTenant(requestContext: RequestContext) {

@@ -1,8 +1,3 @@
-// Copyright IBM Corp. and LoopBack contributors 2020. All Rights Reserved.
-// Node module: @loopback/example-access-control-migration
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
 import {AuthenticationStrategy, TokenService} from '@loopback/authentication';
 import {inject} from '@loopback/core';
 import {HttpErrors, Request} from '@loopback/rest';
@@ -15,7 +10,7 @@ export class JWTAuthenticationStrategy implements AuthenticationStrategy {
   constructor(
     @inject(TokenServiceBindings.TOKEN_SERVICE)
     public tokenService: TokenService,
-  ) {}
+  ) { }
 
   async authenticate(request: Request): Promise<UserProfile | undefined> {
     const token: string = this.extractCredentials(request);

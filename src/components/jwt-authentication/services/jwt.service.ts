@@ -1,8 +1,3 @@
-// Copyright IBM Corp. and LoopBack contributors 2020. All Rights Reserved.
-// Node module: @loopback/example-access-control-migration
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
 import {TokenService} from '@loopback/authentication';
 import {inject} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
@@ -20,7 +15,7 @@ export class JWTService implements TokenService {
     private jwtSecret: string,
     @inject(TokenServiceBindings.TOKEN_EXPIRES_IN)
     private jwtExpiresIn: string,
-  ) {}
+  ) { }
 
   async verifyToken(token: string): Promise<UserProfile> {
     if (!token) {
