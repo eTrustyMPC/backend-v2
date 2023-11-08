@@ -9,6 +9,7 @@ import {
   SECURITY_SCHEME_SPEC,
   UserServiceBindings,
 } from '@loopback/authentication-jwt';
+// @see https://loopback.io/doc/en/lb4/Authorization-overview.html
 import {AuthorizationComponent} from '@loopback/authorization';
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
@@ -20,6 +21,7 @@ import {
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
+// @see https://github.com/casbin/node-casbin
 import {CasbinAuthorizationComponent} from './components/casbin-authorization';
 import {DbDataSource} from './datasources';
 // CUSTOM MODULES
@@ -57,10 +59,7 @@ export class ETrustyApplication extends BootMixin(
     this.component(CrudRestComponent);
     // Bind migration component related elements
     this.component(MigrationComponent);
-    /*
-     * app.configure(MultiTenancyBindings.MIDDLEWARE)
-     *   .to({strategyNames: ['jwt', 'header', 'query']});
-     */
+    // MultiTenancy support
     this.component(MultiTenancyComponent);
     this.configure(MultiTenancyBindings.MIDDLEWARE).to({strategyNames: ['jwt', 'header', 'query']})
     // Mount authentication system
@@ -71,9 +70,8 @@ export class ETrustyApplication extends BootMixin(
 
     // Bind datasource
     this.dataSource(DbDataSource, UserServiceBindings.DATASOURCE_NAME);
-
+    // User service bindings
     this.bind(UserServiceBindings.USER_SERVICE).toClass(MyUserService);
-
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

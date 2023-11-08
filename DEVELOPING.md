@@ -10,8 +10,7 @@ Install the following extensions:
 - [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 - [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
-
-Rules for markdown formatting: <https://github.com/DavidAnson/vscode-markdownlint#rules>
+  - Available rules for markdown formatting: <https://github.com/DavidAnson/vscode-markdownlint#rules>
 
 ## Local Environment Setup
 
