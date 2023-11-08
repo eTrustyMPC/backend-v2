@@ -1,11 +1,15 @@
 // @see https://github.com/loopbackio/loopback-next/tree/master/examples/todo-jwt
 // @see https://www.npmjs.com/package/loopback4-authentication
 import {AuthenticationComponent} from '@loopback/authentication';
+// @see https://loopback.io/doc/en/lb4/Authorization-overview.html
+// @see https://github.com/loopbackio/loopback-next/blob/master/examples/access-control-migration
 import {
   JWTAuthenticationComponent,
   MyUserService,
+  SECURITY_SCHEME_SPEC,
   UserServiceBindings,
 } from '@loopback/authentication-jwt';
+import {AuthorizationComponent} from '@loopback/authorization';
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
@@ -16,13 +20,15 @@ import {
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
+import {CasbinAuthorizationComponent} from './components/casbin-authorization';
 import {DbDataSource} from './datasources';
 // CUSTOM MODULES
 import {CrudRestComponent} from '@loopback/rest-crud';
 // @see https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
 import {MigrationComponent} from "loopback4-migration";
 // @see https://github.com/loopbackio/loopback-next/tree/master/examples/multi-tenancy
-import {MultiTenancyComponent} from './multi-tenancy/component';
+import {MultiTenancyBindings} from './components/multi-tenancy';
+import {MultiTenancyComponent} from './components/multi-tenancy/component';
 import {MySequence} from './sequence';
 
 export {ApplicationConfig};
@@ -44,6 +50,8 @@ export class ETrustyApplication extends BootMixin(
       path: '/explorer',
     });
 
+    this.addSecuritySpec();
+
     // Load components
     this.component(RestExplorerComponent);
     this.component(CrudRestComponent);
@@ -54,10 +62,13 @@ export class ETrustyApplication extends BootMixin(
      *   .to({strategyNames: ['jwt', 'header', 'query']});
      */
     this.component(MultiTenancyComponent);
+    this.configure(MultiTenancyBindings.MIDDLEWARE).to({strategyNames: ['jwt', 'header', 'query']})
     // Mount authentication system
     this.component(AuthenticationComponent);
-    // Mount jwt component
+    this.component(AuthorizationComponent);
     this.component(JWTAuthenticationComponent);
+    this.component(CasbinAuthorizationComponent);
+
     // Bind datasource
     this.dataSource(DbDataSource, UserServiceBindings.DATASOURCE_NAME);
 
@@ -74,5 +85,23 @@ export class ETrustyApplication extends BootMixin(
         nested: true,
       },
     };
+  }
+
+  addSecuritySpec(): void {
+    this.api({
+      openapi: '3.0.0',
+      info: {
+        title: 'eTrusty',
+        version: require('.././package.json').version,
+      },
+      paths: {},
+      components: {securitySchemes: SECURITY_SCHEME_SPEC},
+      security: [
+        {
+          jwt: [],
+        },
+      ],
+      servers: [{url: '/'}],
+    });
   }
 }

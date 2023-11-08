@@ -3,7 +3,7 @@ import {
   Credentials,
   MyUserService,
   TokenServiceBindings,
-  UserRepository,
+  //UserRepository,
   UserServiceBindings,
 } from '@loopback/authentication-jwt';
 import {inject} from '@loopback/core';
@@ -30,9 +30,10 @@ import {
 import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
-import {MultiTenancyBindings, Tenant} from '../multi-tenancy';
-//import {UserRepository} from '../repositories';
+import {MultiTenancyBindings, Tenant} from '../components/multi-tenancy';
+
 import {User} from '../models';
+import {UserRepository} from '../repositories';
 
 @model()
 export class NewUserRequest extends User {
@@ -107,7 +108,6 @@ export class UserController {
     const user = await this.userService.verifyCredentials(credentials);
     // convert a User object into a UserProfile object (reduced set of properties)
     const userProfile = this.userService.convertToUserProfile(user);
-
     // create a JSON Web Token based on the user profile
     const token = await this.jwtService.generateToken(userProfile);
     return {token};
@@ -171,6 +171,7 @@ export class UserController {
     return savedUser;
   }
 
+  @authenticate('jwt')
   @post('/users', {
     responses: {
       '200': {
@@ -201,6 +202,7 @@ export class UserController {
     return this.userRepository.create(user);
   }
 
+  @authenticate('jwt')
   @get('/users/count', {
     responses: {
       '200': {
@@ -213,6 +215,7 @@ export class UserController {
     return this.userRepository.count(where);
   }
 
+  @authenticate('jwt')
   @get('/users', {
     responses: {
       '200': {
@@ -232,6 +235,7 @@ export class UserController {
     return this.userRepository.find(filter);
   }
 
+  @authenticate('jwt')
   @patch('/users', {
     responses: {
       '200': {
@@ -254,6 +258,7 @@ export class UserController {
     return this.userRepository.updateAll(user, where);
   }
 
+  @authenticate('jwt')
   @get('/users/{id}', {
     responses: {
       '200': {
@@ -273,6 +278,7 @@ export class UserController {
     return this.userRepository.findById(id, filter);
   }
 
+  @authenticate('jwt')
   @patch('/users/{id}', {
     responses: {
       '204': {
@@ -294,6 +300,7 @@ export class UserController {
     await this.userRepository.updateById(id, user);
   }
 
+  @authenticate('jwt')
   @put('/users/{id}', {
     responses: {
       '204': {
@@ -308,6 +315,7 @@ export class UserController {
     await this.userRepository.replaceById(id, user);
   }
 
+  @authenticate('jwt')
   @del('/users/{id}', {
     responses: {
       '204': {
