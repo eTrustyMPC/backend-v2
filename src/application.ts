@@ -51,7 +51,7 @@ export class ETrustyApplication extends BootMixin(
     this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
     });
-
+    // set up server default security rules
     this.addSecuritySpec();
 
     // Load components
@@ -61,7 +61,9 @@ export class ETrustyApplication extends BootMixin(
     this.component(MigrationComponent);
     // MultiTenancy support
     this.component(MultiTenancyComponent);
-    this.configure(MultiTenancyBindings.MIDDLEWARE).to({strategyNames: ['jwt', 'header', 'query']})
+    this.configure(MultiTenancyBindings.MIDDLEWARE).to({
+      strategyNames: ['jwt', 'header', 'query']
+    });
     // Mount authentication system
     this.component(AuthenticationComponent);
     this.component(AuthorizationComponent);
