@@ -1,24 +1,58 @@
-import {
-  User as BaseUser
-} from '@loopback/authentication-jwt';
-import {model, property} from '@loopback/repository';
+import {Entity, hasOne, model, property} from '@loopback/repository';
+//import {Team} from './team.model';
+import {UserCredentials} from './user-credentials.model';
 
-@model()
-export class User extends BaseUser {
+@model({
+  settings: {
+    strict: false,
+  },
+})
+export class User extends Entity {
+  // must keep it
+  @property({
+    type: 'number',
+    id: 1,
+    generated: false,
+    updateOnly: true,
+  })
+  id: number;
+
   @property({
     type: 'string',
   })
-  tenantId?: string;
+  realm?: string;
+
+  // must keep it
+  @property({
+    type: 'string',
+  })
+  username?: string;
+
+  // must keep it
+  @property({
+    type: 'string',
+    required: true,
+  })
+  email: string;
+
+  @property({
+    type: 'boolean',
+  })
+  emailVerified?: boolean;
 
   @property({
     type: 'string',
   })
-  firstName?: string;
+  verificationToken?: string;
 
-  @property({
-    type: 'string',
-  })
-  lastName?: string;
+  @hasOne(() => UserCredentials)
+  userCredentials: UserCredentials;
+
+  // Define well-known properties here
+
+  // Indexer property to allow additional data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [prop: string]: any;
 
   constructor(data?: Partial<User>) {
     super(data);

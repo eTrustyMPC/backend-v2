@@ -28,9 +28,6 @@ import {DbDataSource} from './datasources';
 import {CrudRestComponent} from '@loopback/rest-crud';
 // @see https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
 import {MigrationComponent} from "loopback4-migration";
-// @see https://github.com/loopbackio/loopback-next/tree/master/examples/multi-tenancy
-import {MultiTenancyBindings} from './components/multi-tenancy';
-import {MultiTenancyComponent} from './components/multi-tenancy/component';
 import {MySequence} from './sequence';
 
 export {ApplicationConfig};
@@ -59,11 +56,7 @@ export class ETrustyApplication extends BootMixin(
     this.component(CrudRestComponent);
     // Bind migration component related elements
     this.component(MigrationComponent);
-    // MultiTenancy support
-    this.component(MultiTenancyComponent);
-    this.configure(MultiTenancyBindings.MIDDLEWARE).to({
-      strategyNames: ['jwt', 'header', 'query']
-    });
+    // @todo MultiTenancy support
     // Mount authentication system
     this.component(AuthenticationComponent);
     this.component(AuthorizationComponent);
