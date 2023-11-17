@@ -5,6 +5,7 @@ import {UserCredentials} from './user-credentials.model';
 @model({
   settings: {
     strict: false,
+    description: "User model",
   },
 })
 export class User extends Entity {

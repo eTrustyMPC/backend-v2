@@ -11,12 +11,12 @@ import {
 import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
+
 import {
   Credentials,
   TokenServiceBindings,
   UserServiceBindings,
 } from '../components/jwt-authentication';
-
 import {User} from '../models';
 import {UserRepository} from '../repositories';
 
@@ -39,7 +39,7 @@ const CredentialsSchema: SchemaObject = {
     },
     password: {
       type: 'string',
-      minLength: 8,
+      minLength: 6,
     },
   },
 };
