@@ -68,19 +68,21 @@ npm run lint:fix
 ## Tests
 
 ```sh
-npm test
+npm run test
 ```
 
 ## Modules
 
-- CRUD API: <https://www.npmjs.com/package/loopback-component-crud>
-- REST CRUD: <https://github.com/loopbackio/loopback-next/tree/master/packages/rest-cru>
+- CRUD:
+  - API Component: <https://www.npmjs.com/package/loopback-component-crud>
+  - REST Package: <https://github.com/loopbackio/loopback-next/tree/master/packages/rest-crud>
 - Third Web Supabase Auth: <https://github.com/thirdweb-example/thirdweb-auth-supabase>
 - Migration: <https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention>
 
 ## Links
 
 - Full auth setup example for Loopback 4: <https://loopback.io/doc/en/lb4/migration-auth-access-control-example.html>
+- How to create custom CRUD connector: <https://github.com/loopbackio/loopback-datasource-juggler/blob/master/docs/datasource-connector.md>
 
 ## What's next
 

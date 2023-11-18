@@ -148,7 +148,7 @@ export class TenderController {
     await this.tenderRepository.deleteById(id);
   }
 
-  /// RELATIONS ///
+  /// RELATION API ///
 
   @get('/tenders/{id}/user', {
     responses: {

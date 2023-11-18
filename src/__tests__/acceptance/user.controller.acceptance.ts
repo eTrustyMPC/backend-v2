@@ -24,30 +24,30 @@ describe('UserController', () => {
     await app.stop();
   });
 
-  it('invokes GET /signUp', async () => {
-    const res = await client.post('/signUp').send(testUserCredentials).expect(200);
+  it('invokes GET /auth/signUp', async () => {
+    const res = await client.post('/auth/signUp').send(testUserCredentials).expect(200);
     expect(res.body).to.containEql({
       id: testUserId,
       email: testUserCredentials.email,
     });
   });
 
-  it('invokes GET /logIn', async () => {
-    const res = await client.post('/users/logIn').send(testUserCredentials).expect(200);
+  it('invokes GET /auth/logIn', async () => {
+    const res = await client.post('/auth/logIn').send(testUserCredentials).expect(200);
     //console.log(res.body);
     expect(res.body).to.have.property('token');
   });
 
-  it('invokes GET /logIn (incorrect credentials)', async () => {
-    const res = await client.post('/users/logIn').send(incorrectTestUserCredentials).expect(401);
+  it('invokes GET /auth/logIn (incorrect credentials)', async () => {
+    const res = await client.post('/auth/logIn').send(incorrectTestUserCredentials).expect(401);
     //console.log(res.body);
     expect(res.body).to.not.have.property('token');
   });
 
-  it('invokes GET /whoAmI', async () => {
-    const logInRes = await client.post('/users/logIn').send(testUserCredentials).expect(200);
+  it('invokes GET /auth/whoAmI', async () => {
+    const logInRes = await client.post('/auth/logIn').send(testUserCredentials).expect(200);
     const token = logInRes.body.token;
-    const res = await client.get('/whoAmI').set({
+    const res = await client.get('/auth/whoAmI').set({
       'Authorization': `Bearer ${token}`,
       'Accept': 'text/plain',
       //'Accept': 'application/json',
@@ -57,8 +57,8 @@ describe('UserController', () => {
     expect(res.text).to.be.equal(`${testUserId}`);
   });
 
-  it('invokes GET /whoAmI (without JWT)', async () => {
-    const res = await client.get('/whoAmI').expect(401);
+  it('invokes GET /auth/whoAmI (without JWT)', async () => {
+    const res = await client.get('/auth/whoAmI').expect(401);
     expect(res.body).to.have.property('error');
   });
 });

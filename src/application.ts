@@ -16,8 +16,7 @@ import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
-  RestExplorerBindings,
-  RestExplorerComponent,
+  RestExplorerComponent
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
@@ -45,17 +44,19 @@ export class ETrustyApplication extends BootMixin(
     this.static('/', path.join(__dirname, '../public'));
 
     // Customize @loopback/rest-explorer configuration here
-    this.configure(RestExplorerBindings.COMPONENT).to({
+    /*this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
-    });
+    });*/
     // set up server default security rules
     this.addSecuritySpec();
 
     // Load components
     this.component(RestExplorerComponent);
     this.component(CrudRestComponent);
+
     // Bind migration component related elements
     this.component(MigrationComponent);
+
     // @todo MultiTenancy support
     // Mount authentication system
     this.component(AuthenticationComponent);

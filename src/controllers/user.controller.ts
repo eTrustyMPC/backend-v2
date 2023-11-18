@@ -69,7 +69,8 @@ export class UserController {
     @repository(UserRepository) protected userRepository: UserRepository,
   ) { }
 
-  @post('/signUp', {
+  @post('/auth/signUp', {
+    tags: ["Auth"],
     responses: {
       '200': {
         description: 'User',
@@ -97,7 +98,8 @@ export class UserController {
     return savedUser;
   }
 
-  @post('/users/logIn', {
+  @post('/auth/logIn', {
+    tags: ["Auth"],
     responses: {
       '200': {
         description: 'Token',
@@ -130,7 +132,8 @@ export class UserController {
   }
 
   @authenticate('jwt')
-  @get('/whoAmI', {
+  @get('/auth/whoAmI', {
+    tags: ["Auth"],
     responses: {
       '200': {
         description: 'Return current user',

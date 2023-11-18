@@ -20,12 +20,20 @@ export class User extends Entity {
 
   @property({
     type: 'string',
+    description: [
+      "User realms used to separate accounts between spaces.",
+      "Two users within one realm must have unique emails.",
+      "One realm can be shared between several tenants."
+    ].join(" "),
   })
   realm?: string;
 
-  // must keep it
   @property({
     type: 'string',
+    description: [
+      "Unique human-readable id of the user. Not required, can be blank,",
+      "but must be defined in User model for compatibility with Loopback internals."
+    ].join(" "),
   })
   username?: string;
 
@@ -43,6 +51,7 @@ export class User extends Entity {
 
   @property({
     type: 'string',
+    description: "Email verification token (only if email verification enabled).",
   })
   verificationToken?: string;
 
