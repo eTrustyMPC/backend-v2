@@ -71,9 +71,10 @@ export class UserController {
 
   @post('/auth/signUp', {
     tags: ["Auth"],
+    summary: 'New User registration',
     responses: {
       '200': {
-        description: 'User',
+        description: 'Successful registration, data of newly created User',
         content: {
           'application/json': {
             schema: {
@@ -100,9 +101,10 @@ export class UserController {
 
   @post('/auth/logIn', {
     tags: ["Auth"],
+    summary: 'Log in existing user with email/password',
     responses: {
       '200': {
-        description: 'Token',
+        description: 'Successful auth: JWT token will be returned in response',
         content: {
           'application/json': {
             schema: {
@@ -115,6 +117,9 @@ export class UserController {
             },
           },
         },
+      },
+      '401': {
+        description: 'Invalid email/password'
       },
     },
   })
@@ -134,9 +139,10 @@ export class UserController {
   @authenticate('jwt')
   @get('/auth/whoAmI', {
     tags: ["Auth"],
+    summary: 'Get id of currently logged in User',
     responses: {
       '200': {
-        description: 'Return current user',
+        description: 'Current user id',
         content: {
           'application/json': {
             schema: {
@@ -144,6 +150,9 @@ export class UserController {
             },
           },
         },
+      },
+      '401': {
+        description: 'Unauthorized'
       },
     },
   })

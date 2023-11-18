@@ -150,10 +150,11 @@ export class TenderController {
 
   /// RELATION API ///
 
-  @get('/tenders/{id}/user', {
+  @get('/tenders/{id}/owner', {
+    summary: 'Get owner of this Tender',
     responses: {
       '200': {
-        description: 'User belonging to Tender',
+        description: 'User, owner of this Tender',
         content: {
           'application/json': {
             schema: getModelSchemaRef(User),

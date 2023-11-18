@@ -24,8 +24,16 @@ npm ci
 
 ## Run the application
 
+On server:
+
 ```sh
 npm start
+```
+
+During development:
+
+```sh
+npm run start:dev
 ```
 
 You can also run `node .` to skip the build step.

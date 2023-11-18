@@ -50,7 +50,7 @@ export class ETrustyApplication extends BootMixin(
     // set up server default security rules
     this.addSecuritySpec();
 
-    // Load components
+    // Load REST components
     this.component(RestExplorerComponent);
     this.component(CrudRestComponent);
 

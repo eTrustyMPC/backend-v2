@@ -15,6 +15,7 @@
     "node": "16 || 18 || 20"
   },
   "scripts": {
+    "prepare": "npm run build",
     "build": "lb-tsc",
     "build:watch": "lb-tsc --watch",
     "lint": "npm run eslint && npm run prettier:check",
@@ -36,6 +37,7 @@
     "openapi-spec": "node ./dist/openapi-spec",
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
+    "start:dev": "nodemon --exec \"npm start\" --ext ts,mjs,json --watch src/",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build",
     "commit": "(git add .) && git-cz && (git push -o ci.skip)",
@@ -91,6 +93,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^7.0.0",
     "eslint": "^8.48.0",
+    "nodemon": "^3.0.1",
     "semantic-release": "^22.0.5",
     "semantic-release-cli": "^5.4.4",
     "source-map-support": "^0.5.21",

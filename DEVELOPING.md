@@ -63,6 +63,8 @@ docker run --name thirdweb_engine \
    this command manually whenever you have new changes to test. Test failures
    and linter errors will be printed to the terminal.
 
+3. To activate watch mode for "start" command use `npm run start:dev`.
+
 ## Gitflow
 
 Each task must have a dedicated branch, forked from latest `dev` branch. Each completed task must be merged back to `dev` branch.
