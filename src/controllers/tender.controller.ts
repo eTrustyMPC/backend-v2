@@ -163,7 +163,7 @@ export class TenderController {
       },
     },
   })
-  async getUser(
+  async getOwner(
     @param.path.number('id') id: typeof Tender.prototype.id,
   ): Promise<User> {
     return this.tenderRepository.owner(id);

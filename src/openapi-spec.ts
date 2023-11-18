@@ -7,6 +7,7 @@ import {ETrustyApplication} from './application';
 async function exportOpenApiSpec(): Promise<void> {
   const config: ApplicationConfig = {
     rest: {
+      debug: true,
       port: +(process.env.PORT ?? 3000),
       host: process.env.HOST ?? 'localhost',
     },

@@ -16,7 +16,8 @@ import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
-  RestExplorerComponent
+  RestExplorerBindings,
+  RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
@@ -25,6 +26,8 @@ import {CasbinAuthorizationComponent} from './components/casbin-authorization';
 import {DbDataSource} from './datasources';
 // CUSTOM MODULES
 import {CrudRestComponent} from '@loopback/rest-crud';
+// @see https://github.com/loopback4/loopback-component-crud
+import {CRUDComponent} from "loopback-component-crud";
 // @see https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
 import {MigrationComponent} from "loopback4-migration";
 import {MySequence} from './sequence';
@@ -44,11 +47,14 @@ export class ETrustyApplication extends BootMixin(
     this.static('/', path.join(__dirname, '../public'));
 
     // Customize @loopback/rest-explorer configuration here
-    /*this.configure(RestExplorerBindings.COMPONENT).to({
+    this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
-    });*/
+    });
     // set up server default security rules
     this.addSecuritySpec();
+
+    // Add CRUD auto-generation component
+    this.component(CRUDComponent);
 
     // Load REST components
     this.component(RestExplorerComponent);
@@ -89,7 +95,9 @@ export class ETrustyApplication extends BootMixin(
         version: require('.././package.json').version,
       },
       paths: {},
-      components: {securitySchemes: SECURITY_SCHEME_SPEC},
+      components: {
+        securitySchemes: SECURITY_SCHEME_SPEC
+      },
       security: [
         {
           jwt: [],
