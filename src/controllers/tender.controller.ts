@@ -165,6 +165,7 @@ export class TenderController {
   })
   async getOwner(
     @param.path.number('id') id: typeof Tender.prototype.id,
+    //@param.filter(User, {exclude: 'where'}) filter?: FilterExcludingWhere<User>
   ): Promise<User> {
     return this.tenderRepository.owner(id);
   }

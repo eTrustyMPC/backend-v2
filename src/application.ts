@@ -27,7 +27,7 @@ import {DbDataSource} from './datasources';
 // CUSTOM MODULES
 import {CrudRestComponent} from '@loopback/rest-crud';
 // @see https://github.com/loopback4/loopback-component-crud
-import {CRUDComponent} from "loopback-component-crud";
+//import {CRUDComponent} from "loopback-component-crud";
 // @see https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
 import {MigrationComponent} from "loopback4-migration";
 import {MySequence} from './sequence';
@@ -54,7 +54,7 @@ export class ETrustyApplication extends BootMixin(
     this.addSecuritySpec();
 
     // Add CRUD auto-generation component
-    this.component(CRUDComponent);
+    //this.component(CRUDComponent);
 
     // Load REST components
     this.component(RestExplorerComponent);

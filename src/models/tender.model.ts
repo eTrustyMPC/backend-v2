@@ -1,5 +1,6 @@
 import {Entity, belongsTo, model, property, referencesMany} from '@loopback/repository';
 import {User} from './user.model';
+import {Organization} from './organization.model';
 
 @model({
   settings: {
@@ -41,6 +42,9 @@ export class Tender extends Entity {
 
   @referencesMany(() => User)
   juryMemberIds: number[];
+
+  @belongsTo(() => Organization)
+  organizationId: number;
 
   constructor(data?: Partial<Tender>) {
     super(data);
