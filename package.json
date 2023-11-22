@@ -59,6 +59,7 @@
     "@loopback/authentication-passport": "^6.1.3",
     "@loopback/authorization": "^0.14.3",
     "@loopback/boot": "^6.1.3",
+    "@loopback/context-explorer": "^0.10.3",
     "@loopback/core": "^5.1.3",
     "@loopback/filter": "^4.1.3",
     "@loopback/logging": "^0.11.3",

@@ -15,7 +15,9 @@ import {CrudRestComponent} from '@loopback/rest-crud';
 import {MigrationComponent} from "loopback4-migration";
 import {MySequence} from './sequence';
 // @see https://github.com/loopbackio/loopback-next/tree/master/extensions/logging
-import {LoggingComponent} from '@loopback/logging';
+import {LoggingBindings, LoggingComponent} from '@loopback/logging';
+// @see https://github.com/loopbackio/loopback-next/tree/master/extensions/context-explorer
+import {ContextExplorerBindings, ContextExplorerComponent} from '@loopback/context-explorer';
 
 export {ApplicationConfig};
 
@@ -25,8 +27,14 @@ export class ETrustyApplication extends BootMixin(
   constructor(options: ApplicationConfig = {}) {
     super(options);
 
-    // Default logger
+    // @todo use debug plugins only in test/dev envs
+    // Debugging: Winston logger (dev/test env only)
+    this.configure(LoggingBindings.COMPONENT).to({
+      enableFluent: false, // default to true
+      enableHttpAccessLog: true, // default to true
+    });
     this.component(LoggingComponent);
+
 
     // Set up the custom sequence
     this.sequence(MySequence);
@@ -45,6 +53,12 @@ export class ETrustyApplication extends BootMixin(
 
     // Bind migration component related elements
     this.component(MigrationComponent);
+
+    // Debugging: context explorer (dev/test env only)
+    this.component(ContextExplorerComponent);
+    this.configure(ContextExplorerBindings.COMPONENT).to({
+      path: '/context-explorer',
+    });
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
