@@ -87,6 +87,7 @@ export class ETrustyApplication extends BootMixin(
     const OrganizationRepository = defineCrudRepositoryClass(Organization);
     const repoBindingOrganization = this.repository(OrganizationRepository);
     inject('datasources.db')(OrganizationRepository, undefined, 0);
+    //inject('repositories.OrganizationRepository')(OrganizationRepository, undefined, 0);
 
     const OrganizationController = defineCrudRestController<
       Organization,
@@ -103,6 +104,7 @@ export class ETrustyApplication extends BootMixin(
     const PersonRepository = defineCrudRepositoryClass(Person);
     const repoBindingPerson = this.repository(PersonRepository);
     inject('datasources.db')(PersonRepository, undefined, 0);
+    //inject('repositories.PersonRepository')(PersonRepository, undefined, 0);
 
     const PersonController = defineCrudRestController<
       Person,

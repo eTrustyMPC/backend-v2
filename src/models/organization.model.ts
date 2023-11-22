@@ -1,24 +1,19 @@
 import {
   model,
-  property
-} from '@loopback/repository';
+  property, hasMany} from '@loopback/repository';
 import {BaseModel} from './base-model.model';
+import {Person} from './person.model';
 
 @model()
-export class Organization extends BaseModel { //Entity {
-  /*@property({
-    type: 'number',
-    id: true,
-    generated: true,
-  })
-  id: number;*/
-
+export class Organization extends BaseModel {
   @property({
     type: 'string',
     required: true,
   })
   name: string;
 
+  @hasMany(() => Person)
+  persons: Person[];
   // Define well-known properties here
 
   // Indexer property to allow additional data

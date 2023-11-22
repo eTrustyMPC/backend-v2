@@ -1,15 +1,9 @@
-import {model, property} from '@loopback/repository';
+import {model, property, belongsTo} from '@loopback/repository';
 import {BaseModel} from './base-model.model';
+import {Organization} from './organization.model';
 
 @model()
 export class Person extends BaseModel {
-  @property({
-    type: 'number',
-    id: true,
-    generated: true,
-  })
-  id: number;
-
   @property({
     type: 'string',
   })
@@ -20,6 +14,13 @@ export class Person extends BaseModel {
   })
   lastName?: string;
 
+  @belongsTo(() => Organization)
+  organizationId: number;
+  // Define well-known properties here
+
+  // Indexer property to allow additional data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [prop: string]: any;
 
   constructor(data?: Partial<Person>) {
     super(data);
