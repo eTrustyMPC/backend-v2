@@ -1,16 +1,3 @@
-// @see https://github.com/loopbackio/loopback-next/tree/master/examples/todo-jwt
-// @see https://www.npmjs.com/package/loopback4-authentication
-import {AuthenticationComponent} from '@loopback/authentication';
-// @see https://loopback.io/doc/en/lb4/Authorization-overview.html
-// @see https://github.com/loopbackio/loopback-next/blob/master/examples/access-control-migration
-import {
-  JWTAuthenticationComponent,
-  MyUserService,
-  SECURITY_SCHEME_SPEC,
-  UserServiceBindings,
-} from '@loopback/authentication-jwt';
-// @see https://loopback.io/doc/en/lb4/Authorization-overview.html
-import {AuthorizationComponent} from '@loopback/authorization';
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
@@ -19,15 +6,11 @@ import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
+// @see https://loopback.io/doc/en/lb4/Calling-rest-apis.html
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
-// @see https://github.com/casbin/node-casbin
-import {CasbinAuthorizationComponent} from './components/casbin-authorization';
-import {DbDataSource} from './datasources';
-// CUSTOM MODULES
+// @see https://github.com/loopbackio/loopback-next/tree/master/packages/rest-crud
 import {CrudRestComponent} from '@loopback/rest-crud';
-// @see https://github.com/loopback4/loopback-component-crud
-//import {CRUDComponent} from "loopback-component-crud";
 // @see https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
 import {MigrationComponent} from "loopback4-migration";
 import {MySequence} from './sequence';
@@ -50,11 +33,6 @@ export class ETrustyApplication extends BootMixin(
     this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
     });
-    // set up server default security rules
-    this.addSecuritySpec();
-
-    // Add CRUD auto-generation component
-    //this.component(CRUDComponent);
 
     // Load REST components
     this.component(RestExplorerComponent);
@@ -62,18 +40,6 @@ export class ETrustyApplication extends BootMixin(
 
     // Bind migration component related elements
     this.component(MigrationComponent);
-
-    // @todo MultiTenancy support
-    // Mount authentication system
-    this.component(AuthenticationComponent);
-    this.component(AuthorizationComponent);
-    this.component(JWTAuthenticationComponent);
-    this.component(CasbinAuthorizationComponent);
-
-    // Bind datasource
-    this.dataSource(DbDataSource, UserServiceBindings.DATASOURCE_NAME);
-    // User service bindings
-    this.bind(UserServiceBindings.USER_SERVICE).toClass(MyUserService);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
@@ -85,25 +51,5 @@ export class ETrustyApplication extends BootMixin(
         nested: true,
       },
     };
-  }
-
-  addSecuritySpec(): void {
-    this.api({
-      openapi: '3.0.0',
-      info: {
-        title: 'eTrusty',
-        version: require('.././package.json').version,
-      },
-      paths: {},
-      components: {
-        securitySchemes: SECURITY_SCHEME_SPEC
-      },
-      security: [
-        {
-          jwt: [],
-        },
-      ],
-      servers: [{url: '/'}],
-    });
   }
 }
