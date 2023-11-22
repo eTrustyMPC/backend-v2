@@ -14,6 +14,8 @@ import {CrudRestComponent} from '@loopback/rest-crud';
 // @see https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
 import {MigrationComponent} from "loopback4-migration";
 import {MySequence} from './sequence';
+// @see https://github.com/loopbackio/loopback-next/tree/master/extensions/logging
+import {LoggingComponent} from '@loopback/logging';
 
 export {ApplicationConfig};
 
@@ -22,6 +24,9 @@ export class ETrustyApplication extends BootMixin(
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
+
+    // Default logger
+    this.component(LoggingComponent);
 
     // Set up the custom sequence
     this.sequence(MySequence);
