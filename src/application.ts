@@ -18,7 +18,16 @@ import {MySequence} from './sequence';
 // import {LoggingBindings, LoggingComponent} from '@loopback/logging';
 // @see https://github.com/loopbackio/loopback-next/tree/master/extensions/context-explorer
 import {ContextExplorerBindings, ContextExplorerComponent} from '@loopback/context-explorer';
-import {Organization} from './models';
+// app models
+import {
+  Lot,
+  Offer,
+  Organization,
+  Person,
+  Review,
+  ReviewCriterion,
+  Tender
+} from './models';
 
 export {ApplicationConfig};
 
@@ -74,9 +83,9 @@ export class ETrustyApplication extends BootMixin(
   async boot(): Promise<void> {
     await super.boot();
 
+    // Organization
     const OrganizationRepository = defineCrudRepositoryClass(Organization);
-    const repoBinding = this.repository(OrganizationRepository);
-
+    const repoBindingOrganization = this.repository(OrganizationRepository);
     inject('datasources.db')(OrganizationRepository, undefined, 0);
 
     const OrganizationController = defineCrudRestController<
@@ -85,7 +94,93 @@ export class ETrustyApplication extends BootMixin(
       'id'
     >(Organization, {basePath: '/organizations'});
 
-    inject(repoBinding.key)(OrganizationController, undefined, 0);
+    inject(repoBindingOrganization.key)(OrganizationController, undefined, 0);
     this.controller(OrganizationController);
+
+    // Person
+    // we use "persons" instead of "people" because unification
+    // is more important than correct English :)
+    const PersonRepository = defineCrudRepositoryClass(Person);
+    const repoBindingPerson = this.repository(PersonRepository);
+    inject('datasources.db')(PersonRepository, undefined, 0);
+
+    const PersonController = defineCrudRestController<
+      Person,
+      typeof Person.prototype.id,
+      'id'
+    >(Person, {basePath: '/persons'});
+
+    inject(repoBindingPerson.key)(PersonController, undefined, 0);
+    this.controller(PersonController);
+
+    // Lot
+    const LotRepository = defineCrudRepositoryClass(Lot);
+    const repoBindingLot = this.repository(LotRepository);
+    inject('datasources.db')(LotRepository, undefined, 0);
+
+    const LotController = defineCrudRestController<
+      Lot,
+      typeof Lot.prototype.id,
+      'id'
+    >(Lot, {basePath: '/lots'});
+
+    inject(repoBindingLot.key)(LotController, undefined, 0);
+    this.controller(LotController);
+
+    // Offer
+    const OfferRepository = defineCrudRepositoryClass(Offer);
+    const repoBindingOffer = this.repository(OfferRepository);
+    inject('datasources.db')(OfferRepository, undefined, 0);
+
+    const OfferController = defineCrudRestController<
+      Offer,
+      typeof Offer.prototype.id,
+      'id'
+    >(Offer, {basePath: '/offers'});
+
+    inject(repoBindingOffer.key)(OfferController, undefined, 0);
+    this.controller(OfferController);
+
+    // ReviewCriterion
+    const ReviewCriterionRepository = defineCrudRepositoryClass(ReviewCriterion);
+    const repoBindingReviewCriterion = this.repository(ReviewCriterionRepository);
+    inject('datasources.db')(ReviewCriterionRepository, undefined, 0);
+
+    const ReviewCriterionController = defineCrudRestController<
+      ReviewCriterion,
+      typeof ReviewCriterion.prototype.id,
+      'id'
+    >(ReviewCriterion, {basePath: '/review-criterions'});
+
+    inject(repoBindingReviewCriterion.key)(ReviewCriterionController, undefined, 0);
+    this.controller(ReviewCriterionController);
+
+    // Review
+    const ReviewRepository = defineCrudRepositoryClass(Review);
+    const repoBindingReview = this.repository(ReviewRepository);
+    inject('datasources.db')(ReviewRepository, undefined, 0);
+
+    const ReviewController = defineCrudRestController<
+      Review,
+      typeof Review.prototype.id,
+      'id'
+    >(Review, {basePath: '/reviews'});
+
+    inject(repoBindingReview.key)(ReviewController, undefined, 0);
+    this.controller(ReviewController);
+
+    // Tender
+    const TenderRepository = defineCrudRepositoryClass(Tender);
+    const repoBindingTender = this.repository(TenderRepository);
+    inject('datasources.db')(TenderRepository, undefined, 0);
+
+    const TenderController = defineCrudRestController<
+      Tender,
+      typeof Tender.prototype.id,
+      'id'
+    >(Tender, {basePath: '/tenders'});
+
+    inject(repoBindingTender.key)(TenderController, undefined, 0);
+    this.controller(TenderController);
   }
 }
