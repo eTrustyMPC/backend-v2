@@ -1,10 +1,11 @@
 import {inject} from '@loopback/core';
+//import {LoggingBindings, WinstonLogger, logInvocation} from '@loopback/logging';
 import {
   Request,
+  ResponseObject,
   RestBindings,
   get,
   response,
-  ResponseObject,
 } from '@loopback/rest';
 
 /**
@@ -38,12 +39,20 @@ const PING_RESPONSE: ResponseObject = {
  * A simple controller to bounce back http requests
  */
 export class PingController {
-  constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
+  constructor(
+    @inject(RestBindings.Http.REQUEST) private req: Request,
+    //@inject(LoggingBindings.WINSTON_LOGGER) private logger: WinstonLogger
+  ) { }
 
   // Map to `GET /ping`
   @get('/ping')
   @response(200, PING_RESPONSE)
+  //@logInvocation()
   ping(): object {
+    // @todo logging does not working
+    // console.log('kk');
+    //this.logger.log('info', `Called url: ${this.req.url}`);
+
     // Reply with a greeting, the current time, the url, and request headers
     return {
       greeting: 'Hello from LoopBack',
