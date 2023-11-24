@@ -4,10 +4,6 @@ import {BaseModel} from './base-model.model';
 @model()
 export class Review extends BaseModel {
 
-  @property({
-    type: 'number',
-  })
-  offerId?: number;
   // Define well-known properties here
 
   // Indexer property to allow additional data

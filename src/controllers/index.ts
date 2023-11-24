@@ -12,3 +12,4 @@ export * from './offer-tender.controller';
 export * from './offer-lot.controller';
 export * from './offer-person.controller';
 export * from './offer-review.controller';
+export * from './lot-review.controller';

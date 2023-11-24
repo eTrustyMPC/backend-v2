@@ -1,10 +1,11 @@
 import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, BelongsToAccessor, HasManyRepositoryFactory} from '@loopback/repository';
+import {DefaultCrudRepository, repository, BelongsToAccessor, HasManyRepositoryFactory, HasManyThroughRepositoryFactory} from '@loopback/repository';
 import {DbDataSource} from '../datasources';
-import {Lot, LotRelations, Tender, Offer, Person} from '../models';
+import {Lot, LotRelations, Tender, Offer, Person, Review} from '../models';
 import {TenderRepository} from './tender.repository';
 import {OfferRepository} from './offer.repository';
 import {PersonRepository} from './person.repository';
+import {ReviewRepository} from './review.repository';
 
 export class LotRepository extends DefaultCrudRepository<
   Lot,
@@ -18,10 +19,17 @@ export class LotRepository extends DefaultCrudRepository<
 
   public readonly owner: BelongsToAccessor<Person, typeof Lot.prototype.id>;
 
+  public readonly reviews: HasManyThroughRepositoryFactory<Review, typeof Review.prototype.id,
+          Offer,
+          typeof Lot.prototype.id
+        >;
+
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('TenderRepository') protected tenderRepositoryGetter: Getter<TenderRepository>, @repository.getter('OfferRepository') protected offerRepositoryGetter: Getter<OfferRepository>, @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>,
+    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('TenderRepository') protected tenderRepositoryGetter: Getter<TenderRepository>, @repository.getter('OfferRepository') protected offerRepositoryGetter: Getter<OfferRepository>, @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>, @repository.getter('ReviewRepository') protected reviewRepositoryGetter: Getter<ReviewRepository>,
   ) {
     super(Lot, dataSource);
+    this.reviews = this.createHasManyThroughRepositoryFactoryFor('reviews', reviewRepositoryGetter, offerRepositoryGetter,);
+    this.registerInclusionResolver('reviews', this.reviews.inclusionResolver);
     this.owner = this.createBelongsToAccessorFor('owner', personRepositoryGetter,);
     this.registerInclusionResolver('owner', this.owner.inclusionResolver);
     this.offers = this.createHasManyRepositoryFactoryFor('offers', offerRepositoryGetter,);
