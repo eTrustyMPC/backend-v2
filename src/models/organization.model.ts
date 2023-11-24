@@ -1,6 +1,6 @@
 import {
   model,
-  property, hasMany} from '@loopback/repository';
+  property, hasMany, belongsTo} from '@loopback/repository';
 import {BaseModel} from './base-model.model';
 import {Person} from './person.model';
 
@@ -14,6 +14,9 @@ export class Organization extends BaseModel {
 
   @hasMany(() => Person)
   persons: Person[];
+
+  @belongsTo(() => Person)
+  ownerId: number;
   // Define well-known properties here
 
   // Indexer property to allow additional data

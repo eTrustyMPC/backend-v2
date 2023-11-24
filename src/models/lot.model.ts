@@ -8,6 +8,10 @@ export class Lot extends BaseModel {
   })
   name?: string;
 
+  @property({
+    type: 'number',
+  })
+  tenderId?: number;
   // Define well-known properties here
 
   // Indexer property to allow additional data
