@@ -8,3 +8,7 @@ export * from './tender-person.controller';
 export * from './lot-tender.controller';
 export * from './lot-offer.controller';
 export * from './lot-person.controller';
+export * from './offer-tender.controller';
+export * from './offer-lot.controller';
+export * from './offer-person.controller';
+export * from './offer-review.controller';
