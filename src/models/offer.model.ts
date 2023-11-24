@@ -4,6 +4,10 @@ import {BaseModel} from './base-model.model';
 @model()
 export class Offer extends BaseModel {
 
+  @property({
+    type: 'number',
+  })
+  lotId?: number;
   // Define well-known properties here
 
   // Indexer property to allow additional data

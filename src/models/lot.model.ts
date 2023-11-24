@@ -1,5 +1,8 @@
-import {model, property} from '@loopback/repository';
+import {model, property, belongsTo, hasMany} from '@loopback/repository';
 import {BaseModel} from './base-model.model';
+import {Tender} from './tender.model';
+import {Offer} from './offer.model';
+import {Person} from './person.model';
 
 @model()
 export class Lot extends BaseModel {
@@ -8,10 +11,14 @@ export class Lot extends BaseModel {
   })
   name?: string;
 
-  @property({
-    type: 'number',
-  })
-  tenderId?: number;
+  @belongsTo(() => Tender)
+  tenderId: number;
+
+  @hasMany(() => Offer)
+  offers: Offer[];
+
+  @belongsTo(() => Person)
+  ownerId: number;
   // Define well-known properties here
 
   // Indexer property to allow additional data

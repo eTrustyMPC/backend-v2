@@ -5,3 +5,6 @@ export * from './tender-lot.controller';
 export * from './tender-lot.controller';
 export * from './person-tender.controller';
 export * from './tender-person.controller';
+export * from './lot-tender.controller';
+export * from './lot-offer.controller';
+export * from './lot-person.controller';
