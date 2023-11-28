@@ -1,5 +1,5 @@
 import {BootMixin} from '@loopback/boot';
-import {ApplicationConfig} from '@loopback/core';
+import {ApplicationConfig, inject} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
@@ -10,7 +10,7 @@ import {
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 // @see https://github.com/loopbackio/loopback-next/tree/master/packages/rest-crud
-import {CrudRestComponent} from '@loopback/rest-crud';
+import {CrudRestComponent, defineCrudRepositoryClass, defineCrudRestController} from '@loopback/rest-crud';
 // @see https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
 import {MigrationComponent} from "loopback4-migration";
 import {MySequence} from './sequence';
@@ -19,6 +19,7 @@ import {MySequence} from './sequence';
 // @see https://github.com/loopbackio/loopback-next/tree/master/extensions/context-explorer
 import {ContextExplorerBindings, ContextExplorerComponent} from '@loopback/context-explorer';
 // app models
+import {Lot, Offer, Organization, Person, Review, ReviewCriterion, Tender} from './models';
 
 export {ApplicationConfig};
 
@@ -73,12 +74,11 @@ export class ETrustyApplication extends BootMixin(
 
   async boot(): Promise<void> {
     await super.boot();
-    /*
+
     // Organization
     const OrganizationRepository = defineCrudRepositoryClass(Organization);
     const repoBindingOrganization = this.repository(OrganizationRepository);
     inject('datasources.db')(OrganizationRepository, undefined, 0);
-    //inject('repositories.OrganizationRepository')(OrganizationRepository, undefined, 0);
 
     const OrganizationController = defineCrudRestController<
       Organization,
@@ -175,6 +175,6 @@ export class ETrustyApplication extends BootMixin(
 
     inject(repoBindingTender.key)(TenderController, undefined, 0);
     this.controller(TenderController);
-    */
+
   }
 }

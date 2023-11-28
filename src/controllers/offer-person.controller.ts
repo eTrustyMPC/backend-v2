@@ -14,11 +14,11 @@ import {OfferRepository} from '../repositories';
 
 export class OfferPersonController {
   constructor(
-    @repository(OfferRepository)
-    public offerRepository: OfferRepository,
+    @repository(OfferRepository) public offerRepository: OfferRepository,
   ) { }
 
   @get('/offers/{id}/applicant', {
+    tags: ['OfferController'],
     responses: {
       '200': {
         description: 'Person belonging to Offer',
@@ -37,6 +37,7 @@ export class OfferPersonController {
   }
 
   @get('/offers/{id}/tenderOwner', {
+    tags: ['OfferController'],
     responses: {
       '200': {
         description: 'Person belonging to Offer',

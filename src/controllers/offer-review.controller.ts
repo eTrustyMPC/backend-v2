@@ -27,6 +27,7 @@ export class OfferReviewController {
   ) { }
 
   @get('/offers/{id}/reviews', {
+    tags: ['OfferController'],
     responses: {
       '200': {
         description: 'Array of Offer has many Review',
@@ -46,6 +47,7 @@ export class OfferReviewController {
   }
 
   @post('/offers/{id}/reviews', {
+    tags: ['OfferController'],
     responses: {
       '200': {
         description: 'Offer model instance',
@@ -71,6 +73,7 @@ export class OfferReviewController {
   }
 
   @patch('/offers/{id}/reviews', {
+    tags: ['OfferController'],
     responses: {
       '200': {
         description: 'Offer.Review PATCH success count',
@@ -94,6 +97,7 @@ export class OfferReviewController {
   }
 
   @del('/offers/{id}/reviews', {
+    tags: ['OfferController'],
     responses: {
       '200': {
         description: 'Offer.Review DELETE success count',
@@ -101,7 +105,7 @@ export class OfferReviewController {
       },
     },
   })
-  async delete(
+  async deleteReviews(
     @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(Review)) where?: Where<Review>,
   ): Promise<Count> {

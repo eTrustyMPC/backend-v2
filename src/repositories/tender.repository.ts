@@ -1,7 +1,7 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, HasManyRepositoryFactory, BelongsToAccessor} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, DefaultCrudRepository, HasManyRepositoryFactory, repository} from '@loopback/repository';
 import {DbDataSource} from '../datasources';
-import {Tender, TenderRelations, Lot, Person} from '../models';
+import {Lot, Person, Tender, TenderRelations} from '../models';
 import {LotRepository} from './lot.repository';
 import {PersonRepository} from './person.repository';
 
@@ -16,7 +16,9 @@ export class TenderRepository extends DefaultCrudRepository<
   public readonly owner: BelongsToAccessor<Person, typeof Tender.prototype.id>;
 
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('LotRepository') protected lotRepositoryGetter: Getter<LotRepository>, @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>,
+    @inject('datasources.db') dataSource: DbDataSource,
+    @repository.getter('LotRepository') protected lotRepositoryGetter: Getter<LotRepository>,
+    @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>,
   ) {
     super(Tender, dataSource);
     this.owner = this.createBelongsToAccessorFor('owner', personRepositoryGetter,);

@@ -16,8 +16,8 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
-  Tender,
   Lot,
+  Tender,
 } from '../models';
 import {TenderRepository} from '../repositories';
 
@@ -27,6 +27,7 @@ export class TenderLotController {
   ) { }
 
   @get('/tenders/{id}/lots', {
+    tags: ['TenderController'],
     responses: {
       '200': {
         description: 'Array of Tender has many Lot',
@@ -38,7 +39,7 @@ export class TenderLotController {
       },
     },
   })
-  async find(
+  async findLot(
     @param.path.number('id') id: number,
     @param.query.object('filter') filter?: Filter<Lot>,
   ): Promise<Lot[]> {
@@ -46,6 +47,7 @@ export class TenderLotController {
   }
 
   @post('/tenders/{id}/lots', {
+    tags: ['TenderController'],
     responses: {
       '200': {
         description: 'Tender model instance',
@@ -53,7 +55,7 @@ export class TenderLotController {
       },
     },
   })
-  async create(
+  async createLot(
     @param.path.number('id') id: typeof Tender.prototype.id,
     @requestBody({
       content: {
@@ -71,14 +73,15 @@ export class TenderLotController {
   }
 
   @patch('/tenders/{id}/lots', {
+    tags: ['TenderController'],
     responses: {
       '200': {
-        description: 'Tender.Lot PATCH success count',
+        description: 'Tender.lot PATCH success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
   })
-  async patch(
+  async patchLot(
     @param.path.number('id') id: number,
     @requestBody({
       content: {
@@ -94,14 +97,15 @@ export class TenderLotController {
   }
 
   @del('/tenders/{id}/lots', {
+    tags: ['TenderController'],
     responses: {
       '200': {
-        description: 'Tender.Lot DELETE success count',
+        description: 'Tender.lots DELETE success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
   })
-  async delete(
+  async deleteLots(
     @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(Lot)) where?: Where<Lot>,
   ): Promise<Count> {

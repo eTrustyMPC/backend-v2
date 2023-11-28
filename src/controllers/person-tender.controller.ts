@@ -26,7 +26,8 @@ export class PersonTenderController {
     @repository(PersonRepository) protected personRepository: PersonRepository,
   ) { }
 
-  @get('/people/{id}/tenders', {
+  @get('/persons/{id}/tenders', {
+    tags: ['PersonController'],
     responses: {
       '200': {
         description: 'Array of Person has many Tender',
@@ -38,14 +39,15 @@ export class PersonTenderController {
       },
     },
   })
-  async find(
+  async findTender(
     @param.path.number('id') id: number,
     @param.query.object('filter') filter?: Filter<Tender>,
   ): Promise<Tender[]> {
     return this.personRepository.tendersOwned(id).find(filter);
   }
 
-  @post('/people/{id}/tenders', {
+  @post('/persons/{id}/tenders', {
+    tags: ['PersonController'],
     responses: {
       '200': {
         description: 'Person model instance',
@@ -53,7 +55,7 @@ export class PersonTenderController {
       },
     },
   })
-  async create(
+  async createTender(
     @param.path.number('id') id: typeof Person.prototype.id,
     @requestBody({
       content: {
@@ -70,7 +72,8 @@ export class PersonTenderController {
     return this.personRepository.tendersOwned(id).create(tender);
   }
 
-  @patch('/people/{id}/tenders', {
+  @patch('/persons/{id}/tenders', {
+    tags: ['PersonController'],
     responses: {
       '200': {
         description: 'Person.Tender PATCH success count',
@@ -78,7 +81,7 @@ export class PersonTenderController {
       },
     },
   })
-  async patch(
+  async patchTender(
     @param.path.number('id') id: number,
     @requestBody({
       content: {
@@ -93,7 +96,8 @@ export class PersonTenderController {
     return this.personRepository.tendersOwned(id).patch(tender, where);
   }
 
-  @del('/people/{id}/tenders', {
+  @del('/persons/{id}/tenders', {
+    tags: ['PersonController'],
     responses: {
       '200': {
         description: 'Person.Tender DELETE success count',
@@ -101,7 +105,7 @@ export class PersonTenderController {
       },
     },
   })
-  async delete(
+  async deleteTenders(
     @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(Tender)) where?: Where<Tender>,
   ): Promise<Count> {

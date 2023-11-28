@@ -2,13 +2,13 @@ import {
   repository,
 } from '@loopback/repository';
 import {
-  param,
   get,
   getModelSchemaRef,
+  param,
 } from '@loopback/rest';
 import {
-  Person,
   Organization,
+  Person,
 } from '../models';
 import {PersonRepository} from '../repositories';
 
@@ -18,7 +18,8 @@ export class PersonOrganizationController {
     public personRepository: PersonRepository,
   ) { }
 
-  @get('/people/{id}/organization', {
+  @get('/persons/{id}/organization', {
+    tags: ['PersonController'],
     responses: {
       '200': {
         description: 'Organization belonging to Person',

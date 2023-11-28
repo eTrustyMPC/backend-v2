@@ -16,7 +16,9 @@ export class PersonRepository extends DefaultCrudRepository<
   public readonly tendersOwned: HasManyRepositoryFactory<Tender, typeof Person.prototype.id>;
 
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('OrganizationRepository') protected organizationRepositoryGetter: Getter<OrganizationRepository>, @repository.getter('TenderRepository') protected tenderRepositoryGetter: Getter<TenderRepository>,
+    @inject('datasources.db') dataSource: DbDataSource,
+    @repository.getter('OrganizationRepository') protected organizationRepositoryGetter: Getter<OrganizationRepository>,
+    @repository.getter('TenderRepository') protected tenderRepositoryGetter: Getter<TenderRepository>,
   ) {
     super(Person, dataSource);
     this.tendersOwned = this.createHasManyRepositoryFactoryFor('tendersOwned', tenderRepositoryGetter,);

@@ -1,11 +1,11 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, BelongsToAccessor, HasManyRepositoryFactory, HasManyThroughRepositoryFactory} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, DefaultCrudRepository, HasManyRepositoryFactory, HasManyThroughRepositoryFactory, repository} from '@loopback/repository';
 import {DbDataSource} from '../datasources';
-import {Lot, LotRelations, Tender, Offer, Person, Review} from '../models';
-import {TenderRepository} from './tender.repository';
+import {Lot, LotRelations, Offer, Person, Review, Tender} from '../models';
 import {OfferRepository} from './offer.repository';
 import {PersonRepository} from './person.repository';
 import {ReviewRepository} from './review.repository';
+import {TenderRepository} from './tender.repository';
 
 export class LotRepository extends DefaultCrudRepository<
   Lot,
@@ -20,12 +20,16 @@ export class LotRepository extends DefaultCrudRepository<
   public readonly owner: BelongsToAccessor<Person, typeof Lot.prototype.id>;
 
   public readonly reviews: HasManyThroughRepositoryFactory<Review, typeof Review.prototype.id,
-          Offer,
-          typeof Lot.prototype.id
-        >;
+    Offer,
+    typeof Lot.prototype.id
+  >;
 
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('TenderRepository') protected tenderRepositoryGetter: Getter<TenderRepository>, @repository.getter('OfferRepository') protected offerRepositoryGetter: Getter<OfferRepository>, @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>, @repository.getter('ReviewRepository') protected reviewRepositoryGetter: Getter<ReviewRepository>,
+    @inject('datasources.db') dataSource: DbDataSource,
+    @repository.getter('TenderRepository') protected tenderRepositoryGetter: Getter<TenderRepository>,
+    @repository.getter('OfferRepository') protected offerRepositoryGetter: Getter<OfferRepository>,
+    @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>,
+    @repository.getter('ReviewRepository') protected reviewRepositoryGetter: Getter<ReviewRepository>,
   ) {
     super(Lot, dataSource);
     this.reviews = this.createHasManyThroughRepositoryFactoryFor('reviews', reviewRepositoryGetter, offerRepositoryGetter,);

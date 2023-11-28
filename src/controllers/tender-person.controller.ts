@@ -2,13 +2,13 @@ import {
   repository,
 } from '@loopback/repository';
 import {
-  param,
   get,
   getModelSchemaRef,
+  param,
 } from '@loopback/rest';
 import {
-  Tender,
   Person,
+  Tender,
 } from '../models';
 import {TenderRepository} from '../repositories';
 
@@ -18,10 +18,11 @@ export class TenderPersonController {
     public tenderRepository: TenderRepository,
   ) { }
 
-  @get('/tenders/{id}/person', {
+  @get('/tenders/{id}/owner', {
+    tags: ['TenderController'],
     responses: {
       '200': {
-        description: 'Person belonging to Tender',
+        description: 'Tender owner',
         content: {
           'application/json': {
             schema: getModelSchemaRef(Person),
@@ -30,7 +31,7 @@ export class TenderPersonController {
       },
     },
   })
-  async getPerson(
+  async getOwner(
     @param.path.number('id') id: typeof Tender.prototype.id,
   ): Promise<Person> {
     return this.tenderRepository.owner(id);

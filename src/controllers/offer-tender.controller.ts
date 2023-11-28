@@ -2,9 +2,9 @@ import {
   repository,
 } from '@loopback/repository';
 import {
-  param,
   get,
   getModelSchemaRef,
+  param,
 } from '@loopback/rest';
 import {
   Offer,
@@ -19,6 +19,7 @@ export class OfferTenderController {
   ) { }
 
   @get('/offers/{id}/tender', {
+    tags: ['OfferController'],
     responses: {
       '200': {
         description: 'Tender belonging to Offer',

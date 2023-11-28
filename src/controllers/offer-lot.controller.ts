@@ -2,23 +2,23 @@ import {
   repository,
 } from '@loopback/repository';
 import {
-  param,
   get,
   getModelSchemaRef,
+  param,
 } from '@loopback/rest';
 import {
-  Offer,
   Lot,
+  Offer,
 } from '../models';
 import {OfferRepository} from '../repositories';
 
 export class OfferLotController {
   constructor(
-    @repository(OfferRepository)
-    public offerRepository: OfferRepository,
+    @repository(OfferRepository) public offerRepository: OfferRepository,
   ) { }
 
   @get('/offers/{id}/lot', {
+    tags: ['OfferController'],
     responses: {
       '200': {
         description: 'Lot belonging to Offer',

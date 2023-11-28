@@ -2,9 +2,9 @@ import {
   repository,
 } from '@loopback/repository';
 import {
-  param,
   get,
   getModelSchemaRef,
+  param,
 } from '@loopback/rest';
 import {
   Lot,
@@ -14,11 +14,11 @@ import {LotRepository} from '../repositories';
 
 export class LotTenderController {
   constructor(
-    @repository(LotRepository)
-    public lotRepository: LotRepository,
+    @repository(LotRepository) public lotRepository: LotRepository,
   ) { }
 
   @get('/lots/{id}/tender', {
+    tags: ['LotController'],
     responses: {
       '200': {
         description: 'Tender belonging to Lot',

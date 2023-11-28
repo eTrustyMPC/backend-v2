@@ -5,7 +5,7 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-  import {
+import {
   del,
   get,
   getModelSchemaRef,
@@ -16,9 +16,8 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
-Lot,
-Offer,
-Review,
+  Lot,
+  Review
 } from '../models';
 import {LotRepository} from '../repositories';
 
@@ -28,6 +27,7 @@ export class LotReviewController {
   ) { }
 
   @get('/lots/{id}/reviews', {
+    tags: ['LotController'],
     responses: {
       '200': {
         description: 'Array of Lot has many Review through Offer',
@@ -39,7 +39,7 @@ export class LotReviewController {
       },
     },
   })
-  async find(
+  async findReview(
     @param.path.number('id') id: number,
     @param.query.object('filter') filter?: Filter<Review>,
   ): Promise<Review[]> {
@@ -47,6 +47,7 @@ export class LotReviewController {
   }
 
   @post('/lots/{id}/reviews', {
+    tags: ['LotController'],
     responses: {
       '200': {
         description: 'create a Review model instance',
@@ -54,7 +55,7 @@ export class LotReviewController {
       },
     },
   })
-  async create(
+  async createReview(
     @param.path.number('id') id: typeof Lot.prototype.id,
     @requestBody({
       content: {
@@ -71,6 +72,7 @@ export class LotReviewController {
   }
 
   @patch('/lots/{id}/reviews', {
+    tags: ['LotController'],
     responses: {
       '200': {
         description: 'Lot.Review PATCH success count',
@@ -78,7 +80,7 @@ export class LotReviewController {
       },
     },
   })
-  async patch(
+  async patchReview(
     @param.path.number('id') id: number,
     @requestBody({
       content: {
@@ -94,6 +96,7 @@ export class LotReviewController {
   }
 
   @del('/lots/{id}/reviews', {
+    tags: ['LotController'],
     responses: {
       '200': {
         description: 'Lot.Review DELETE success count',
@@ -101,7 +104,7 @@ export class LotReviewController {
       },
     },
   })
-  async delete(
+  async deleteReviews(
     @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(Review)) where?: Where<Review>,
   ): Promise<Count> {

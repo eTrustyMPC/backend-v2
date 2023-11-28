@@ -15,7 +15,8 @@ export class OrganizationRepository extends DefaultCrudRepository<
   public readonly owner: BelongsToAccessor<Person, typeof Organization.prototype.id>;
 
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>,
+    @inject('datasources.db') dataSource: DbDataSource,
+    @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>,
   ) {
     super(Organization, dataSource);
     this.owner = this.createBelongsToAccessorFor('owner', personRepositoryGetter,);

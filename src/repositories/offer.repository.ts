@@ -1,11 +1,11 @@
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, DefaultCrudRepository, repository, HasManyRepositoryFactory} from '@loopback/repository';
+import {BelongsToAccessor, DefaultCrudRepository, HasManyRepositoryFactory, repository} from '@loopback/repository';
 import {DbDataSource} from '../datasources';
-import {Lot, Offer, OfferRelations, Person, Tender, Review} from '../models';
+import {Lot, Offer, OfferRelations, Person, Review, Tender} from '../models';
 import {LotRepository} from './lot.repository';
 import {PersonRepository} from './person.repository';
-import {TenderRepository} from './tender.repository';
 import {ReviewRepository} from './review.repository';
+import {TenderRepository} from './tender.repository';
 
 export class OfferRepository extends DefaultCrudRepository<
   Offer,
@@ -24,7 +24,11 @@ export class OfferRepository extends DefaultCrudRepository<
   public readonly reviews: HasManyRepositoryFactory<Review, typeof Offer.prototype.id>;
 
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource, @repository.getter('TenderRepository') protected tenderRepositoryGetter: Getter<TenderRepository>, @repository.getter('LotRepository') protected lotRepositoryGetter: Getter<LotRepository>, @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>, @repository.getter('ReviewRepository') protected reviewRepositoryGetter: Getter<ReviewRepository>,
+    @inject('datasources.db') dataSource: DbDataSource,
+    @repository.getter('TenderRepository') protected tenderRepositoryGetter: Getter<TenderRepository>,
+    @repository.getter('LotRepository') protected lotRepositoryGetter: Getter<LotRepository>,
+    @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>,
+    @repository.getter('ReviewRepository') protected reviewRepositoryGetter: Getter<ReviewRepository>,
   ) {
     super(Offer, dataSource);
     this.reviews = this.createHasManyRepositoryFactoryFor('reviews', reviewRepositoryGetter,);
