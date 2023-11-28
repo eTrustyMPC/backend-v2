@@ -105,7 +105,7 @@ export class TenderLotController {
       },
     },
   })
-  async deleteLots(
+  async deleteLot(
     @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(Lot)) where?: Where<Lot>,
   ): Promise<Count> {

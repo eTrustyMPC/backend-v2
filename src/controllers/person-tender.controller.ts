@@ -105,7 +105,7 @@ export class PersonTenderController {
       },
     },
   })
-  async deleteTenders(
+  async deleteTender(
     @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(Tender)) where?: Where<Tender>,
   ): Promise<Count> {

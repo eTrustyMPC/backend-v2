@@ -21,7 +21,7 @@ export class OrganizationRepository extends DefaultCrudRepository<
     super(Organization, dataSource);
     this.owner = this.createBelongsToAccessorFor('owner', personRepositoryGetter,);
     this.registerInclusionResolver('owner', this.owner.inclusionResolver);
-    this.persons = this.createHasManyRepositoryFactoryFor('people', personRepositoryGetter,);
-    this.registerInclusionResolver('people', this.persons.inclusionResolver);
+    this.persons = this.createHasManyRepositoryFactoryFor('persons', personRepositoryGetter,);
+    this.registerInclusionResolver('persons', this.persons.inclusionResolver);
   }
 }

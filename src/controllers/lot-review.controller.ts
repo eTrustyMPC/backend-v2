@@ -104,7 +104,7 @@ export class LotReviewController {
       },
     },
   })
-  async deleteReviews(
+  async deleteReview(
     @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(Review)) where?: Where<Review>,
   ): Promise<Count> {

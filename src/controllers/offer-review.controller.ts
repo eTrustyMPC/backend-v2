@@ -39,7 +39,7 @@ export class OfferReviewController {
       },
     },
   })
-  async find(
+  async findReview(
     @param.path.number('id') id: number,
     @param.query.object('filter') filter?: Filter<Review>,
   ): Promise<Review[]> {
@@ -55,7 +55,7 @@ export class OfferReviewController {
       },
     },
   })
-  async create(
+  async createReview(
     @param.path.number('id') id: typeof Offer.prototype.id,
     @requestBody({
       content: {
@@ -81,7 +81,7 @@ export class OfferReviewController {
       },
     },
   })
-  async patch(
+  async patchReview(
     @param.path.number('id') id: number,
     @requestBody({
       content: {
@@ -105,7 +105,7 @@ export class OfferReviewController {
       },
     },
   })
-  async deleteReviews(
+  async deleteReview(
     @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(Review)) where?: Where<Review>,
   ): Promise<Count> {

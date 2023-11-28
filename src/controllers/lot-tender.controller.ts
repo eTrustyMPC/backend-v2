@@ -21,7 +21,7 @@ export class LotTenderController {
     tags: ['LotController'],
     responses: {
       '200': {
-        description: 'Tender belonging to Lot',
+        description: 'Tender of this Lot',
         content: {
           'application/json': {
             schema: getModelSchemaRef(Tender),

@@ -1,9 +1,12 @@
-import {model} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
 import {BaseModel} from './base-model.model';
 
 @model()
 export class Review extends BaseModel {
-
+  @property({
+    type: 'string',
+  })
+  description?: string;
   // Define well-known properties here
 
   // Indexer property to allow additional data

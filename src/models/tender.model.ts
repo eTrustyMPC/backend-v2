@@ -1,4 +1,4 @@
-import {model, property, belongsTo, hasMany} from '@loopback/repository';
+import {belongsTo, hasMany, model, property} from '@loopback/repository';
 import {BaseModel} from './base-model.model';
 import {Lot} from './lot.model';
 import {Person} from './person.model';
@@ -10,9 +10,6 @@ export class Tender extends BaseModel {
     required: true,
   })
   name: string;
-
-  @belongsTo(() => Lot)
-  lotId: number;
 
   @hasMany(() => Lot)
   lots: Lot[];

@@ -7,7 +7,6 @@ export * from './offer-tender.controller';
 export * from './organization-person.controller';
 export * from './person-organization.controller';
 export * from './person-tender.controller';
-export * from './ping.controller';
 export * from './tender-lot.controller';
 export * from './tender-person.controller';
 
