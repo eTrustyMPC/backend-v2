@@ -10,16 +10,31 @@ import {
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 // @see https://github.com/loopbackio/loopback-next/tree/master/packages/rest-crud
-import {CrudRestComponent, defineCrudRepositoryClass, defineCrudRestController} from '@loopback/rest-crud';
+import {
+  CrudRestComponent,
+  defineCrudRepositoryClass,
+  defineCrudRestController,
+} from '@loopback/rest-crud';
 // @see https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
 import {MigrationComponent} from "loopback4-migration";
-import {MySequence} from './sequence';
+import {DefaultSequence} from './sequence';
 // @see https://github.com/loopbackio/loopback-next/tree/master/extensions/logging
 // import {LoggingBindings, LoggingComponent} from '@loopback/logging';
 // @see https://github.com/loopbackio/loopback-next/tree/master/extensions/context-explorer
-import {ContextExplorerBindings, ContextExplorerComponent} from '@loopback/context-explorer';
+import {
+  ContextExplorerBindings,
+  ContextExplorerComponent
+} from '@loopback/context-explorer';
 // app models
-import {Lot, Offer, Organization, Person, Review, ReviewCriterion, Tender} from './models';
+import {
+  Lot,
+  Offer,
+  Organization,
+  Person,
+  Review,
+  ReviewCriterion,
+  Tender
+} from './models';
 
 export {ApplicationConfig};
 
@@ -30,7 +45,7 @@ export class ETrustyApplication extends BootMixin(
     super(options);
 
     // Set up the custom sequence
-    this.sequence(MySequence);
+    this.sequence(DefaultSequence);
 
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
