@@ -4,7 +4,7 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
-  RestExplorerComponent,
+  RestExplorerComponent
 } from '@loopback/rest-explorer';
 // @see https://loopback.io/doc/en/lb4/Calling-rest-apis.html
 import {ServiceMixin} from '@loopback/service-proxy';
@@ -26,6 +26,7 @@ import {
   ContextExplorerComponent
 } from '@loopback/context-explorer';
 // app models
+import {config as dotenv_config} from "dotenv";
 import {
   Lot,
   Offer,
@@ -35,8 +36,13 @@ import {
   ReviewCriterion,
   Tender
 } from './models';
+dotenv_config();
 
 export {ApplicationConfig};
+
+//console.log(`process.env`, process.env);
+
+const DEFAULT_DATASOURCE: string = String(process.env.DEFAULT_DATASOURCE);
 
 export class ETrustyApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
@@ -93,7 +99,7 @@ export class ETrustyApplication extends BootMixin(
     // Organization
     const OrganizationRepository = defineCrudRepositoryClass(Organization);
     const repoBindingOrganization = this.repository(OrganizationRepository);
-    inject('datasources.db')(OrganizationRepository, undefined, 0);
+    inject(`datasources.${DEFAULT_DATASOURCE}`)(OrganizationRepository, undefined, 0);
 
     const OrganizationController = defineCrudRestController<
       Organization,
@@ -109,7 +115,7 @@ export class ETrustyApplication extends BootMixin(
     // is more important than correct English :)
     const PersonRepository = defineCrudRepositoryClass(Person);
     const repoBindingPerson = this.repository(PersonRepository);
-    inject('datasources.db')(PersonRepository, undefined, 0);
+    inject(`datasources.${DEFAULT_DATASOURCE}`)(PersonRepository, undefined, 0);
     //inject('repositories.PersonRepository')(PersonRepository, undefined, 0);
 
     const PersonController = defineCrudRestController<
@@ -124,7 +130,7 @@ export class ETrustyApplication extends BootMixin(
     // Lot
     const LotRepository = defineCrudRepositoryClass(Lot);
     const repoBindingLot = this.repository(LotRepository);
-    inject('datasources.db')(LotRepository, undefined, 0);
+    inject(`datasources.${DEFAULT_DATASOURCE}`)(LotRepository, undefined, 0);
 
     const LotController = defineCrudRestController<
       Lot,
@@ -138,7 +144,7 @@ export class ETrustyApplication extends BootMixin(
     // Offer
     const OfferRepository = defineCrudRepositoryClass(Offer);
     const repoBindingOffer = this.repository(OfferRepository);
-    inject('datasources.db')(OfferRepository, undefined, 0);
+    inject(`datasources.${DEFAULT_DATASOURCE}`)(OfferRepository, undefined, 0);
 
     const OfferController = defineCrudRestController<
       Offer,
@@ -152,7 +158,7 @@ export class ETrustyApplication extends BootMixin(
     // ReviewCriterion
     const ReviewCriterionRepository = defineCrudRepositoryClass(ReviewCriterion);
     const repoBindingReviewCriterion = this.repository(ReviewCriterionRepository);
-    inject('datasources.db')(ReviewCriterionRepository, undefined, 0);
+    inject(`datasources.${DEFAULT_DATASOURCE}`)(ReviewCriterionRepository, undefined, 0);
 
     const ReviewCriterionController = defineCrudRestController<
       ReviewCriterion,
@@ -166,7 +172,7 @@ export class ETrustyApplication extends BootMixin(
     // Review
     const ReviewRepository = defineCrudRepositoryClass(Review);
     const repoBindingReview = this.repository(ReviewRepository);
-    inject('datasources.db')(ReviewRepository, undefined, 0);
+    inject(`datasources.${DEFAULT_DATASOURCE}`)(ReviewRepository, undefined, 0);
 
     const ReviewController = defineCrudRestController<
       Review,
@@ -180,7 +186,7 @@ export class ETrustyApplication extends BootMixin(
     // Tender
     const TenderRepository = defineCrudRepositoryClass(Tender);
     const repoBindingTender = this.repository(TenderRepository);
-    inject('datasources.db')(TenderRepository, undefined, 0);
+    inject(`datasources.${DEFAULT_DATASOURCE}`)(TenderRepository, undefined, 0);
 
     const TenderController = defineCrudRestController<
       Tender,
