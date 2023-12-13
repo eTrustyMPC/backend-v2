@@ -14,6 +14,10 @@ export class ReviewCriterion extends BaseModel {
   })
   description?: string;
 
+  @property({
+    type: 'number',
+  })
+  reviewId?: number;
   // Define well-known properties here
 
   // Indexer property to allow additional data
