@@ -29,5 +29,9 @@
   "eslint.validate": [
     "javascript",
     "typescript"
+  ],
+  "cSpell.words": [
+    "bitmanipulation",
+    "secata"
   ]
 }
