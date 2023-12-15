@@ -2,18 +2,20 @@ import * as casbin from 'casbin';
 import path from 'path';
 
 const POLICY_PATHS = {
-  admin: './../../../../fixtures/casbin/rbac_policy.admin.csv',
-  owner: './../../../../fixtures/casbin/rbac_policy.owner.csv',
-  team: './../../../../fixtures/casbin/rbac_policy.team_member.csv',
+  rootAdmin: './../../../../fixtures/casbin/rbac_policy.root_admin.csv',
+  tenderOwner: './../../../../fixtures/casbin/rbac_policy.tender_owner.csv',
+  juryMember: './../../../../fixtures/casbin/rbac_policy.jury_member.csv',
+  applicant: './../../../../fixtures/casbin/rbac_policy.applicant.csv',
 };
 
 export async function getCasbinEnforcerByName(
   name: string,
 ): Promise<casbin.Enforcer | undefined> {
   const CASBIN_ENFORCERS: {[key: string]: Promise<casbin.Enforcer>} = {
-    admin: createEnforcerByRole(POLICY_PATHS.admin),
-    owner: createEnforcerByRole(POLICY_PATHS.owner),
-    team: createEnforcerByRole(POLICY_PATHS.team),
+    rootAdmin: createEnforcerByRole(POLICY_PATHS.rootAdmin),
+    tenderOwner: createEnforcerByRole(POLICY_PATHS.tenderOwner),
+    juryMember: createEnforcerByRole(POLICY_PATHS.juryMember),
+    applicant: createEnforcerByRole(POLICY_PATHS.applicant),
   };
   if (Object.prototype.hasOwnProperty.call(CASBIN_ENFORCERS, name))
     return CASBIN_ENFORCERS[name];
