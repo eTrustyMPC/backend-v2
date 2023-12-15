@@ -7,9 +7,9 @@ import {RESOURCE_ID} from '../keys';
 
 /**
  * Instance level authorizer for known endpoints
- * - 'projects/{id}/show-balance'
- * - 'projects/{id}/donate'
- * - 'projects/{id}/withdraw'
+ * - 'organizations/{id}/show-balance'
+ * - 'organizations/{id}/donate'
+ * - 'organizations/{id}/withdraw'
  * This function is used to modify the authorization context.
  * It is not used for making a decision, so just returns ABSTAIN
  * @param authorizationCtx
@@ -19,10 +19,10 @@ export async function assignProjectInstanceId(
   authorizationCtx: AuthorizationContext,
   metadata: AuthorizationMetadata,
 ) {
-  const projectId = authorizationCtx.invocationContext.args[0];
+  const organizationId = authorizationCtx.invocationContext.args[0];
   const resourceId = getResourceName(
     metadata.resource ?? authorizationCtx.resource,
-    projectId,
+    organizationId,
   );
   // resourceId will override the resource name from metadata
   authorizationCtx.invocationContext.bind(RESOURCE_ID).to(resourceId);
