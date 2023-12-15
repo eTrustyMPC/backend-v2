@@ -15,7 +15,7 @@ import {RESOURCE_ID} from '../keys';
  * @param authorizationCtx
  * @param metadata
  */
-export async function assignProjectInstanceId(
+export async function assignOrganizationInstanceId(
   authorizationCtx: AuthorizationContext,
   metadata: AuthorizationMetadata,
 ) {
