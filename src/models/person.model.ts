@@ -24,7 +24,7 @@ export class Person extends BaseModel {
 
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  //[prop: string]: any;
 
   constructor(data?: Partial<Person>) {
     super(data);

@@ -1,9 +1,9 @@
-import {model, property, belongsTo, hasOne} from '@loopback/repository';
+import {belongsTo, hasOne, model, property} from '@loopback/repository';
 import {BaseModel} from './base-model.model';
-import {Tender} from './tender.model';
 import {Offer} from './offer.model';
 import {Person} from './person.model';
 import {ReviewCriterion} from './review-criterion.model';
+import {Tender} from './tender.model';
 
 @model()
 export class Review extends BaseModel {
@@ -27,7 +27,7 @@ export class Review extends BaseModel {
 
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  //[prop: string]: any;
 
   constructor(data?: Partial<Review>) {
     super(data);
