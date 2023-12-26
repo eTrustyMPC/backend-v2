@@ -14,3 +14,4 @@ export * from './tender-review.controller';
 export * from './review-offer.controller';
 export * from './review-person.controller';
 export * from './review-review-criterion.controller';
+export * from './user.controller';

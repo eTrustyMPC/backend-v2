@@ -1,3 +1,4 @@
 import {MiddlewareSequence} from '@loopback/rest';
 
-export class DefaultSequence extends MiddlewareSequence { }
+export class DefaultSequence extends MiddlewareSequence {
+}

@@ -1,4 +1,8 @@
 import {AuthenticationComponent} from '@loopback/authentication';
+import {
+  JWTAuthenticationComponent,
+  UserServiceBindings
+} from '@loopback/authentication-jwt';
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig, inject} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
@@ -18,6 +22,7 @@ import {
 } from '@loopback/rest-crud';
 // @see https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention
 import {MigrationComponent} from "loopback4-migration";
+import {DbDataSource} from './datasources';
 import {DefaultSequence} from './sequence';
 // @see https://github.com/loopbackio/loopback-next/tree/master/extensions/logging
 // import {LoggingBindings, LoggingComponent} from '@loopback/logging';
@@ -64,6 +69,7 @@ export class ETrustyApplication extends BootMixin(
 
     // Load Authentication
     this.component(AuthenticationComponent);
+    this.component(JWTAuthenticationComponent);
 
     // Load REST components
     this.component(RestExplorerComponent);
@@ -95,6 +101,9 @@ export class ETrustyApplication extends BootMixin(
         nested: true,
       },
     };
+
+    // Bind datasource
+    this.dataSource(DbDataSource, UserServiceBindings.DATASOURCE_NAME);
   }
 
   async boot(): Promise<void> {
