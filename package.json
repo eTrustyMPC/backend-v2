@@ -56,7 +56,7 @@
   ],
   "dependencies": {
     "@loopback/authentication": "^10.1.4",
-    "@loopback/authentication-passport": "^6.1.3",
+    "@loopback/authentication-passport": "^6.1.4",
     "@loopback/authorization": "^0.14.3",
     "@loopback/boot": "^6.1.3",
     "@loopback/context-explorer": "^0.10.3",

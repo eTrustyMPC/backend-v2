@@ -1,3 +1,4 @@
+import {AuthenticationComponent} from '@loopback/authentication';
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig, inject} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
@@ -60,6 +61,9 @@ export class ETrustyApplication extends BootMixin(
     this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
     });
+
+    // Load Authentication
+    this.component(AuthenticationComponent);
 
     // Load REST components
     this.component(RestExplorerComponent);
