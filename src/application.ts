@@ -1,6 +1,8 @@
 import {AuthenticationComponent} from '@loopback/authentication';
 import {
   JWTAuthenticationComponent,
+  MyUserService,
+  SECURITY_SCHEME_SPEC,
   UserServiceBindings
 } from '@loopback/authentication-jwt';
 import {BootMixin} from '@loopback/boot';
@@ -104,6 +106,8 @@ export class ETrustyApplication extends BootMixin(
 
     // Bind datasource
     this.dataSource(DbDataSource, UserServiceBindings.DATASOURCE_NAME);
+    // User service bindings
+    this.bind(UserServiceBindings.USER_SERVICE).toClass(MyUserService);
   }
 
   async boot(): Promise<void> {
@@ -210,5 +214,25 @@ export class ETrustyApplication extends BootMixin(
     inject(repoBindingTender.key)(TenderController, undefined, 0);
     this.controller(TenderController);
 
+  }
+
+  addSecuritySpec(): void {
+    this.api({
+      openapi: '3.0.0',
+      info: {
+        title: 'eTrusty',
+        version: require('.././package.json').version,
+      },
+      paths: {},
+      components: {
+        securitySchemes: SECURITY_SCHEME_SPEC
+      },
+      security: [
+        {
+          jwt: [],
+        },
+      ],
+      servers: [{url: '/'}],
+    });
   }
 }

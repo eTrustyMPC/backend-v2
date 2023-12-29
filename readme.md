@@ -79,6 +79,12 @@ npm run lint:fix
 npm run test
 ```
 
+## Run migrations
+
+```sh
+npm run migrate
+```
+
 ## Modules
 
 - CRUD:

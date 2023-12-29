@@ -1,11 +1,6 @@
 import {authenticate, TokenService} from '@loopback/authentication';
 import {
-  Credentials,
   MyUserService,
-  TokenServiceBindings,
-  User,
-  UserRepository,
-  UserServiceBindings,
 } from '@loopback/authentication-jwt';
 import {inject} from '@loopback/core';
 import {model, property, repository} from '@loopback/repository';
@@ -19,6 +14,14 @@ import {
 import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
+
+import {
+  Credentials,
+  TokenServiceBindings,
+  UserServiceBindings,
+} from '../components/jwt-authentication';
+import {User} from '../models';
+import {UserRepository} from '../repositories';
 
 @model()
 export class NewUserRequest extends User {
