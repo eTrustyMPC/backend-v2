@@ -1,6 +1,6 @@
 {
   "name": "etrusty-backend-v2",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "eTrusty backend on LB4",
   "keywords": [
     "loopback-application",
