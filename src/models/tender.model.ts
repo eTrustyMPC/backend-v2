@@ -1,50 +1,30 @@
-import {Entity, belongsTo, model, property, referencesMany} from '@loopback/repository';
-import {User} from './user.model';
-import {Organization} from './organization.model';
+import {belongsTo, hasMany, model, property} from '@loopback/repository';
+import {BaseModel} from './base-model.model';
+import {Lot} from './lot.model';
+import {Person} from './person.model';
+import {Review} from './review.model';
 
-@model({
-  settings: {
-    description: "Tender object, container for Lots"
-  }
-})
-export class Tender extends Entity {
-  @property({
-    type: 'number',
-    id: 1,
-    generated: false,
-    updateOnly: true,
-  })
-  id: number;
-
+@model()
+export class Tender extends BaseModel {
   @property({
     type: 'string',
     required: true,
   })
   name: string;
 
-  @property({
-    type: 'date',
-  })
-  startDate?: string;
+  @hasMany(() => Lot)
+  lots: Lot[];
 
-  @property({
-    type: 'date',
-  })
-  endDate?: string;
-
-  @property({
-    type: 'date',
-  })
-  deadlineDate?: string;
-
-  @belongsTo(() => User)
+  @belongsTo(() => Person)
   ownerId: number;
 
-  @referencesMany(() => User)
-  juryMemberIds: number[];
+  @hasMany(() => Review)
+  reviews: Review[];
+  // Define well-known properties here
 
-  @belongsTo(() => Organization)
-  organizationId: number;
+  // Indexer property to allow additional data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //[prop: string]: any;
 
   constructor(data?: Partial<Tender>) {
     super(data);

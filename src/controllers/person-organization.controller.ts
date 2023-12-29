@@ -8,22 +8,21 @@ import {
 } from '@loopback/rest';
 import {
   Organization,
-  Tender,
+  Person,
 } from '../models';
-import {TenderRepository} from '../repositories';
+import {PersonRepository} from '../repositories';
 
-
-export class TenderOrganizationController {
+export class PersonOrganizationController {
   constructor(
-    @repository(TenderRepository)
-    public tenderRepository: TenderRepository,
+    @repository(PersonRepository)
+    public personRepository: PersonRepository,
   ) { }
 
-  @get('/tenders/{id}/organization', {
-    tags: ['TenderController'],
+  @get('/persons/{id}/organization', {
+    tags: ['PersonController'],
     responses: {
       '200': {
-        description: 'Organization belonging to Tender',
+        description: 'Organization belonging to Person',
         content: {
           'application/json': {
             schema: getModelSchemaRef(Organization),
@@ -33,8 +32,8 @@ export class TenderOrganizationController {
     },
   })
   async getOrganization(
-    @param.path.number('id') id: typeof Tender.prototype.id,
+    @param.path.number('id') id: typeof Person.prototype.id,
   ): Promise<Organization> {
-    return this.tenderRepository.organization(id);
+    return this.personRepository.organization(id);
   }
 }

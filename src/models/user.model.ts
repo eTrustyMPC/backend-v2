@@ -12,9 +12,9 @@ export class User extends Entity {
   // must keep it
   @property({
     type: 'number',
-    id: 1,
-    generated: false,
-    updateOnly: true,
+    id: true,
+    generated: true,
+    //updateOnly: true,
   })
   id: number;
 

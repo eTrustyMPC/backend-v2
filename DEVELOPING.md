@@ -27,7 +27,7 @@ docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgre
 Docs: <https://portal.thirdweb.com/engine>
 
 ```sh
-docker run --name thirdweb_engine \
+docker run --name thirdweb_engine -d \
   -e THIRDWEB_API_SECRET_KEY="" \
   -e ADMIN_WALLET_ADDRESS="" \
   -e POSTGRES_CONNECTION_URL="postgresql://postgres:postgres@host.docker.internal:5432/postgres?sslmode=disable" \
@@ -36,6 +36,18 @@ docker run --name thirdweb_engine \
   --pull=always \
   --cpus="0.5" \
   thirdweb/engine:latest
+```
+
+Third Web engine uses Google Cloud KMS service: <https://portal.thirdweb.com/engine/backend-wallets#google-cloud-kms-wallet>
+
+### Google Cloud CLI
+
+Docs: <https://cloud.google.com/sdk/docs/install>
+
+```sh
+snap install google-cloud-cli --classic
+gcloud init
+gcloud auth login --no-launch-browser
 ```
 
 ## Development Workflow

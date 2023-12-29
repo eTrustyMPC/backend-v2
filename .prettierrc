@@ -1,7 +1,11 @@
 {
-  "bracketSpacing": false,
+  "plugins": [
+    "prettier-plugin-organize-imports"
+  ],
+  "bracketSpacing": true,
   "singleQuote": true,
-  "printWidth": 80,
+  "printWidth": 120,
   "trailingComma": "all",
-  "arrowParens": "avoid"
+  "arrowParens": "avoid",
+  "organizeImportsSkipDestructiveCodeActions": true
 }

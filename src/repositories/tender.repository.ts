@@ -1,9 +1,10 @@
 import {Getter, inject} from '@loopback/core';
-import {BelongsToAccessor, DefaultCrudRepository, ReferencesManyAccessor, repository} from '@loopback/repository';
+import {BelongsToAccessor, DefaultCrudRepository, HasManyRepositoryFactory, repository} from '@loopback/repository';
 import {DbDataSource} from '../datasources';
-import {Tender, TenderRelations, User, Organization} from '../models';
-import {UserRepository} from './user.repository';
-import {OrganizationRepository} from './organization.repository';
+import {Lot, Person, Tender, TenderRelations, Review} from '../models';
+import {LotRepository} from './lot.repository';
+import {PersonRepository} from './person.repository';
+import {ReviewRepository} from './review.repository';
 
 export class TenderRepository extends DefaultCrudRepository<
   Tender,
@@ -11,22 +12,23 @@ export class TenderRepository extends DefaultCrudRepository<
   TenderRelations
 > {
 
-  public readonly owner: BelongsToAccessor<User, typeof Tender.prototype.id>;
+  public readonly lots: HasManyRepositoryFactory<Lot, typeof Tender.prototype.id>;
 
-  public readonly juryMembers: ReferencesManyAccessor<User, typeof Tender.prototype.id>;
+  public readonly owner: BelongsToAccessor<Person, typeof Tender.prototype.id>;
 
-  public readonly organization: BelongsToAccessor<Organization, typeof Tender.prototype.id>;
+  public readonly reviews: HasManyRepositoryFactory<Review, typeof Tender.prototype.id>;
 
   constructor(
     @inject('datasources.db') dataSource: DbDataSource,
-    @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>, @repository.getter('OrganizationRepository') protected organizationRepositoryGetter: Getter<OrganizationRepository>,
+    @repository.getter('LotRepository') protected lotRepositoryGetter: Getter<LotRepository>,
+    @repository.getter('PersonRepository') protected personRepositoryGetter: Getter<PersonRepository>, @repository.getter('ReviewRepository') protected reviewRepositoryGetter: Getter<ReviewRepository>,
   ) {
     super(Tender, dataSource);
-    this.organization = this.createBelongsToAccessorFor('organization', organizationRepositoryGetter,);
-    this.registerInclusionResolver('organization', this.organization.inclusionResolver);
-    this.juryMembers = this.createReferencesManyAccessorFor('juryMembers', userRepositoryGetter,);
-    this.registerInclusionResolver('juryMembers', this.juryMembers.inclusionResolver);
-    this.owner = this.createBelongsToAccessorFor('owner', userRepositoryGetter,);
+    this.reviews = this.createHasManyRepositoryFactoryFor('reviews', reviewRepositoryGetter,);
+    this.registerInclusionResolver('reviews', this.reviews.inclusionResolver);
+    this.owner = this.createBelongsToAccessorFor('owner', personRepositoryGetter,);
     this.registerInclusionResolver('owner', this.owner.inclusionResolver);
+    this.lots = this.createHasManyRepositoryFactoryFor('lots', lotRepositoryGetter,);
+    this.registerInclusionResolver('lots', this.lots.inclusionResolver);
   }
 }

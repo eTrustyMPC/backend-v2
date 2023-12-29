@@ -16,21 +16,21 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
-  Organization,
+  Person,
   Tender,
 } from '../models';
-import {OrganizationRepository} from '../repositories';
+import {PersonRepository} from '../repositories';
 
-export class OrganizationTenderController {
+export class PersonTenderController {
   constructor(
-    @repository(OrganizationRepository) protected organizationRepository: OrganizationRepository,
+    @repository(PersonRepository) protected personRepository: PersonRepository,
   ) { }
 
-  @get('/organizations/{id}/tenders', {
-    tags: ['OrganizationController'],
+  @get('/persons/{id}/tenders', {
+    tags: ['PersonController'],
     responses: {
       '200': {
-        description: 'Array of Organization has many Tender',
+        description: 'Array of Person has many Tender',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(Tender)},
@@ -39,47 +39,49 @@ export class OrganizationTenderController {
       },
     },
   })
-  async find(
+  async findTender(
     @param.path.number('id') id: number,
     @param.query.object('filter') filter?: Filter<Tender>,
   ): Promise<Tender[]> {
-    return this.organizationRepository.tenders(id).find(filter);
+    return this.personRepository.tendersOwned(id).find(filter);
   }
 
-  @post('/organizations/{id}/tenders', {
+  @post('/persons/{id}/tenders', {
+    tags: ['PersonController'],
     responses: {
       '200': {
-        description: 'Organization model instance',
+        description: 'Person model instance',
         content: {'application/json': {schema: getModelSchemaRef(Tender)}},
       },
     },
   })
-  async create(
-    @param.path.number('id') id: typeof Organization.prototype.id,
+  async createTender(
+    @param.path.number('id') id: typeof Person.prototype.id,
     @requestBody({
       content: {
         'application/json': {
           schema: getModelSchemaRef(Tender, {
-            title: 'NewTenderInOrganization',
+            title: 'NewTenderInPerson',
             exclude: ['id'],
-            optional: ['organizationId']
+            optional: ['ownerId']
           }),
         },
       },
     }) tender: Omit<Tender, 'id'>,
   ): Promise<Tender> {
-    return this.organizationRepository.tenders(id).create(tender);
+    return this.personRepository.tendersOwned(id).create(tender);
   }
 
-  @patch('/organizations/{id}/tenders', {
+  @patch('/persons/{id}/tenders', {
+    tags: ['PersonController'],
     responses: {
       '200': {
-        description: 'Organization.Tender PATCH success count',
+        description: 'Person.Tender PATCH success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
   })
-  async patch(
+  async patchTender(
     @param.path.number('id') id: number,
     @requestBody({
       content: {
@@ -91,21 +93,22 @@ export class OrganizationTenderController {
     tender: Partial<Tender>,
     @param.query.object('where', getWhereSchemaFor(Tender)) where?: Where<Tender>,
   ): Promise<Count> {
-    return this.organizationRepository.tenders(id).patch(tender, where);
+    return this.personRepository.tendersOwned(id).patch(tender, where);
   }
 
-  @del('/organizations/{id}/tenders', {
+  @del('/persons/{id}/tenders', {
+    tags: ['PersonController'],
     responses: {
       '200': {
-        description: 'Organization.Tender DELETE success count',
+        description: 'Person.Tender DELETE success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
   })
-  async delete(
+  async deleteTender(
     @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(Tender)) where?: Where<Tender>,
   ): Promise<Count> {
-    return this.organizationRepository.tenders(id).delete(where);
+    return this.personRepository.tendersOwned(id).delete(where);
   }
 }

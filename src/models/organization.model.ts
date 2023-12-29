@@ -1,15 +1,14 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
-import {Tender} from './tender.model';
+import {
+  belongsTo,
+  hasMany,
+  model,
+  property
+} from '@loopback/repository';
+import {BaseModel} from './base-model.model';
+import {Person} from './person.model';
 
 @model()
-export class Organization extends Entity {
-  @property({
-    type: 'number',
-    id: true,
-    generated: true,
-  })
-  id?: number;
-
+export class Organization extends BaseModel {
   @property({
     type: 'string',
     required: true,
@@ -21,8 +20,17 @@ export class Organization extends Entity {
   })
   description?: string;
 
-  @hasMany(() => Tender)
-  tenders: Tender[];
+  @hasMany(() => Person)
+  persons: Person[];
+
+  @belongsTo(() => Person)
+  ownerId: number;
+  // Define well-known properties here
+
+  // Indexer property to allow additional data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //[prop: string]: any;
+
 
   constructor(data?: Partial<Organization>) {
     super(data);

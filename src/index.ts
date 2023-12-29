@@ -1,4 +1,6 @@
+import {config as dotenv_config} from "dotenv";
 import {ApplicationConfig, ETrustyApplication} from './application';
+dotenv_config();
 
 export * from './application';
 
