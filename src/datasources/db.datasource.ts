@@ -1,6 +1,7 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 
+/*
 const config = {
   name: 'db',
   connector: 'postgresql',
@@ -10,6 +11,13 @@ const config = {
   user: 'postgres',
   password: 'postgres',
   database: 'backend_v2_test'
+};
+*/
+const config = {
+  name: 'memory',
+  connector: 'memory',
+  localStorage: '',
+  file: '',
 };
 
 // Observe application's life cycle to disconnect the datasource when

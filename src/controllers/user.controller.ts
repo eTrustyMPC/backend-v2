@@ -1,7 +1,9 @@
 import {authenticate, TokenService} from '@loopback/authentication';
+/*
 import {
   MyUserService,
 } from '@loopback/authentication-jwt';
+*/
 import {inject} from '@loopback/core';
 import {model, property, repository} from '@loopback/repository';
 import {
@@ -17,8 +19,9 @@ import _ from 'lodash';
 
 import {
   Credentials,
+  MyUserService,
   TokenServiceBindings,
-  UserServiceBindings,
+  UserServiceBindings
 } from '../components/jwt-authentication';
 import {User} from '../models';
 import {UserRepository} from '../repositories';
