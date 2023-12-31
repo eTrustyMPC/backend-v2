@@ -1,6 +1,6 @@
 {
     "$schema" : "https://cdn.jsdelivr.net/gh/Zhengqbbb/cz-git@1.8.0/docs/public/schema/cz-git.json",
-    "skipQuestions" : ["scope", "body", "footer"],
+    "skipQuestions" : ["scope", "body", "footer", "footerPrefix"],
     "defaultScope": "empty",
     "emptyScopesAlias": "empty",
     "allowEmptyScopes": false,
