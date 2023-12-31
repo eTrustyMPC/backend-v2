@@ -170,20 +170,7 @@
   "config": {
     "commitizen": {
       "path": "node_modules/cz-git",
-      "czConfig": ".commitlintrc.json",
-      "skipQuestions": [
-        "scope"
-      ],
-      "defaultScope": "empty",
-      "emptyScopesAlias": "empty",
-      "allowEmptyScopes": false,
-      "allowCustomScopes": false,
-      "breaklineNumber": 100,
-      "prompt": {
-        "scopes": [
-          "empty"
-        ]
-      }
+      "czConfig": ".commitlintrc.json"
     }
   }
 }
