@@ -41,8 +41,8 @@
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build",
     "commit": "(git add .) && git-cz && (git push -o ci.skip)",
-    "release-dev": "npx semantic-release --branch=dev --no-ci",
-    "release": "npx semantic-release --branch=main --no-ci"
+    "release-dev": "npx semantic-release --branches=dev --no-ci",
+    "release": "npx semantic-release --branches=main --no-ci"
   },
   "repository": {
     "type": "git",
