@@ -45,8 +45,7 @@
     "release": "npx semantic-release --branches=main --no-ci"
   },
   "repository": {
-    "type": "git",
-    "url": ""
+    "type": "git"
   },
   "files": [
     "README.md",

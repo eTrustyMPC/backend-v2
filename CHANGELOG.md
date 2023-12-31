@@ -1,3 +1,14 @@
+Changelog
+
+## [1.1.1](https://github.com/eTrustyMPC/backend-v2/compare/v1.1.0...v1.1.1) (2023-12-31)
+
+
+### Bug Fixes
+
+* **empty:** fixed release command options ([e0c6302](https://github.com/eTrustyMPC/backend-v2/commit/e0c630204075d1d6c9653c6c3c0994319c022add))
+* fixed semantic-release branch config ([41b3a3c](https://github.com/eTrustyMPC/backend-v2/commit/41b3a3cf9425c49d0587aa87399ec52ff5548957))
+* hotfixed DB config for release ([be8bd63](https://github.com/eTrustyMPC/backend-v2/commit/be8bd6396fcaa4efa0ae56aeef064d97b686c882))
+
 # Changelog
 
 ## [1.1.0](https://github.com/eTrustyMPC/backend-v2/compare/v1.0.0...v1.1.0) (2023-12-29)
