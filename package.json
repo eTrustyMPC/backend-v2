@@ -111,6 +111,7 @@
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^7.0.0",
+    "cz-git": "^1.8.0",
     "eslint": "^8.48.0",
     "nodemon": "^3.0.1",
     "semantic-release": "^22.0.5",
@@ -119,7 +120,10 @@
     "typescript": "~5.2.2"
   },
   "release": {
-    "branches": ["main", "dev"],
+    "branches": [
+      "main",
+      "dev"
+    ],
     "plugins": [
       [
         "@semantic-release/commit-analyzer",
@@ -165,7 +169,21 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "node_modules/cz-git",
+      "czConfig": ".commitlintrc.json",
+      "skipQuestions": [
+        "scope"
+      ],
+      "defaultScope": "empty",
+      "emptyScopesAlias": "empty",
+      "allowEmptyScopes": false,
+      "allowCustomScopes": false,
+      "breaklineNumber": 100,
+      "prompt": {
+        "scopes": [
+          "empty"
+        ]
+      }
     }
   }
 }
