@@ -5,9 +5,11 @@ import {BindingKey} from '@loopback/core';
 import {User} from '../../models/user.model';
 import {Credentials} from './services/user.service';
 
+//console.log(`process.env.JWT_EXPIRES_IN:`, process.env.JWT_EXPIRES_IN);
+
 export namespace TokenServiceConstants {
-  export const TOKEN_SECRET_VALUE = 'myjwts3cr3t';
-  export const TOKEN_EXPIRES_IN_VALUE = '21600';
+  export const TOKEN_SECRET_VALUE = String(process.env.JWT_PRIVATE_KEY);
+  export const TOKEN_EXPIRES_IN_VALUE = String(process.env.JWT_EXPIRES_IN);
 }
 
 export namespace TokenServiceBindings {

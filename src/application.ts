@@ -34,7 +34,7 @@ import {
   ContextExplorerComponent
 } from '@loopback/context-explorer';
 // app models
-import {config as dotenv_config} from "dotenv";
+import {config as loadEnv} from "dotenv";
 import {
   Lot,
   Offer,
@@ -44,7 +44,7 @@ import {
   ReviewCriterion,
   Tender
 } from './models';
-dotenv_config();
+loadEnv();
 
 export {ApplicationConfig};
 
