@@ -1,41 +1,41 @@
-import {Entity, hasOne, model, property} from '@loopback/repository';
-//import {Team} from './team.model';
-import {UserCredentials} from './user-credentials.model';
+// Copyright IBM Corp. and LoopBack contributors 2020. All Rights Reserved.
+// Node module: @loopback/example-passport-login
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
 
-@model({
-  settings: {
-    strict: false,
-    description: "User model",
-  },
-})
+import {Entity, hasMany, hasOne, model, property} from '@loopback/repository';
+import {UserCredentials} from './user-credentials.model';
+import {UserIdentity} from './user-identity.model';
+
+export {UserIdentity} from './user-identity.model';
+
+@model()
 export class User extends Entity {
-  // must keep it
   @property({
     type: 'number',
     id: true,
     generated: true,
-    //updateOnly: true,
   })
   id: number;
 
   @property({
     type: 'string',
-    description: [
-      "User realms used to separate accounts between spaces.",
-      "Two users within one realm must have unique emails.",
-      "One realm can be shared between several tenants."
-    ].join(" "),
+    required: true,
   })
-  realm?: string;
+  name: string;
 
   @property({
     type: 'string',
-    description: [
-      "Unique human-readable id of the user. Not required, can be blank,",
-      "but must be defined in User model for compatibility with Loopback internals."
-    ].join(" "),
   })
-  username?: string;
+  realm?: string;
+
+  // must keep it
+  @property({
+    type: 'string',
+    required: true,
+    index: {unique: true},
+  })
+  username: string;
 
   // must keep it
   @property({
@@ -51,18 +51,14 @@ export class User extends Entity {
 
   @property({
     type: 'string',
-    description: "Email verification token (only if email verification enabled).",
   })
   verificationToken?: string;
 
   @hasOne(() => UserCredentials)
-  userCredentials: UserCredentials;
+  credentials?: UserCredentials;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @hasMany(() => UserIdentity)
+  profiles?: UserIdentity[];
 
   constructor(data?: Partial<User>) {
     super(data);

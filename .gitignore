@@ -1,8 +1,12 @@
 # Env
+.env
 .env.local
 .env.development
 .env.testing
 .env.production
+
+# Keys/config
+oauth2-providers.json
 
 # Logs
 logs
@@ -25,12 +29,6 @@ coverage
 
 # nyc test coverage
 .nyc_output
-
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
-# Bower dependency directory (https://bower.io/)
-bower_components
 
 # node-waf configuration
 .lock-wscript
@@ -59,9 +57,6 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
-
-# dotenv environment variables file
-.env
 
 # Transpiled JavaScript files from Typescript
 /dist

@@ -1,17 +1,8 @@
-export * from './lot-review.controller';
-export * from './lot-tender.controller';
-export * from './offer-lot.controller';
-export * from './offer-person.controller';
-export * from './offer-review.controller';
-export * from './offer-tender.controller';
-export * from './organization-person.controller';
-export * from './person-organization.controller';
-export * from './person-tender.controller';
-export * from './tender-lot.controller';
-export * from './tender-person.controller';
-export * from './review-tender.controller';
-export * from './tender-review.controller';
-export * from './review-offer.controller';
-export * from './review-person.controller';
-export * from './review-review-criterion.controller';
+// Copyright IBM Corp. and LoopBack contributors 2020. All Rights Reserved.
+// Node module: @loopback/example-passport-login
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
+export * from './oauth2.controller';
+export * from './ping.controller';
 export * from './user.controller';

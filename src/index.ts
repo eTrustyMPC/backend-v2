@@ -1,40 +1,100 @@
-import {config as dotenv_config} from "dotenv";
-import {ApplicationConfig, ETrustyApplication} from './application';
-dotenv_config();
+// Copyright IBM Corp. and LoopBack contributors 2020. All Rights Reserved.
+// Node module: @loopback/example-passport-login
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
 
-export * from './application';
+import { RestApplication } from '@loopback/rest';
+import * as path from 'path';
+import { oauth2ProfileFunction } from './authentication-strategies';
+import { ApplicationConfig, ExpressServer } from './server';
 
-export async function main(options: ApplicationConfig = {}) {
-  const app = new ETrustyApplication(options);
-  await app.boot();
-  await app.start();
+export * from './server';
 
-  const url = app.restServer.url;
-  console.log(`Server is running at ${url}`);
-  console.log(`Try ${url}/ping`);
-
-  return app;
-}
-
-if (require.main === module) {
-  // Run the application
+/**
+ * Prepare server config
+ * @param oauth2Providers
+ */
+export async function serverConfig(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  oauth2Providers: any,
+): Promise<ApplicationConfig> {
   const config = {
     rest: {
       port: +(process.env.PORT ?? 3000),
       host: process.env.HOST,
-      // The `gracePeriodForClose` provides a graceful close for http/https
-      // servers with keep-alive clients. The default value is `Infinity`
-      // (don't force-close). If you want to immediately destroy all sockets
-      // upon stop, set its value to `0`.
-      // See https://www.npmjs.com/package/stoppable
+      protocol: 'http',
       gracePeriodForClose: 5000, // 5 seconds
       openApiSpec: {
-        // useful when used with OpenAPI-to-GraphQL to locate your application
         setServersFromRequest: true,
       },
+      // Use the LB4 application as a route. It should not be listening.
+      listenOnStart: false,
     },
+    facebookOptions: oauth2Providers['facebook-login'],
+    googleOptions: oauth2Providers['google-login'],
+    twitterOptions: oauth2Providers['twitter-login'],
+    oauth2Options: oauth2Providers['oauth2'],
   };
-  main(config).catch(err => {
+  return config;
+}
+
+/**
+ * bind resources to application
+ * @param server
+ */
+export async function setupApplication(
+  lbApp: RestApplication,
+  dbBackupFile?: string,
+) {
+  lbApp.bind('datasources.config.db').to({
+    name: 'db',
+    connector: 'memory',
+    localStorage: '',
+    file: dbBackupFile ? path.resolve(__dirname, dbBackupFile) : undefined,
+  });
+
+  lbApp
+    .bind('authentication.oauth2.profile.function')
+    .to(oauth2ProfileFunction);
+}
+
+/**
+ * Start this application
+ * @param oauth2Providers
+ */
+export async function startApplication(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  oauth2Providers: any,
+  dbBackupFile?: string,
+): Promise<ExpressServer> {
+  const config = await serverConfig(oauth2Providers);
+  const server = new ExpressServer(config);
+  await setupApplication(server.lbApp, dbBackupFile);
+  await server.boot();
+  await server.start();
+  return server;
+}
+
+/**
+ * run main() to start application with oauth config
+ */
+export async function main() {
+  console.log(`process.env.OAUTH_PROVIDERS_LOCATION=${process.env.OAUTH_PROVIDERS_LOCATION}`)
+  let oauth2Providers;
+  if (process.env.OAUTH_PROVIDERS_LOCATION) {
+    oauth2Providers = require(process.env.OAUTH_PROVIDERS_LOCATION);
+  } else {
+    oauth2Providers = require('@loopback/mock-oauth2-provider');
+  }
+  const server: ExpressServer = await startApplication(
+    oauth2Providers,
+    process.env.DB_BKP_FILE_PATH, // eg: export DB_BKP_FILE_PATH=../data/db.json
+  );
+  console.log(`Server is running at ${server.url}`);
+}
+
+if (require.main === module) {
+  main().catch(err => {
     console.error('Cannot start the application.', err);
     process.exit(1);
   });

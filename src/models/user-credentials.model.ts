@@ -1,31 +1,28 @@
-import {Entity, model, property} from '@loopback/repository';
+// Copyright IBM Corp. and LoopBack contributors 2020. All Rights Reserved.
+// Node module: @loopback/example-passport-login
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
 
-@model({settings: {strict: false}})
+import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {User} from './user.model';
+
+@model()
 export class UserCredentials extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
-    generated: true,
   })
-  id: number;
+  id: string;
 
   @property({
     type: 'string',
     required: true,
+    hidden: true,
   })
   password: string;
 
-  @property({
-    type: 'number',
-    required: true,
-  })
-  userId: number;
-
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any;
+  @belongsTo(() => User)
+  userId?: number;
 
   constructor(data?: Partial<UserCredentials>) {
     super(data);
