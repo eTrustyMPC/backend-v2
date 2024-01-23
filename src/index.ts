@@ -8,9 +8,9 @@ import {config as loadEnv} from "dotenv";
 import * as path from 'path';
 import {oauth2ProfileFunction} from './authentication-strategies';
 import {ApplicationConfig, ExpressServer} from './server';
-loadEnv();
 
 export * from './server';
+loadEnv();
 
 /**
  * Prepare server config
@@ -82,6 +82,8 @@ export async function startApplication(
  */
 export async function main() {
   console.log(`process.env.OAUTH_PROVIDERS_LOCATION=${process.env.OAUTH_PROVIDERS_LOCATION}`)
+  console.log(`process.env.HOST=${process.env.HOST}`)
+  console.log(`process.env.PORT=${process.env.PORT}`)
   let oauth2Providers;
   if (process.env.OAUTH_PROVIDERS_LOCATION) {
     oauth2Providers = require(process.env.OAUTH_PROVIDERS_LOCATION);

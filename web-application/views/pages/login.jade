@@ -14,7 +14,7 @@ block content
       else
         form(role='form', action='/login_submit', method='post')
           .form-group
-            label(for='email') User Name
+            label(for='email') Email
             input.form-control(type='text', name='email', placeholder='Enter user name')
           .form-group
             label(for='password') Password
@@ -26,11 +26,7 @@ block content
       h1 Other Login Options
       ul.list-inline.list-unstyled
         li
-          a.btn.btn-primary(href="/api/auth/thirdparty/facebook") Login with Facebook
-        li
           a.btn.btn-primary(href="/api/auth/thirdparty/google") Login with Google
-        li
-          a.btn.btn-primary(href="/api/auth/thirdparty/twitter") Login with Twitter
       if messages
         p
           span(style="color:red")= messages
