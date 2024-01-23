@@ -3,10 +3,12 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 
-import { RestApplication } from '@loopback/rest';
+import {RestApplication} from '@loopback/rest';
+import {config as loadEnv} from "dotenv";
 import * as path from 'path';
-import { oauth2ProfileFunction } from './authentication-strategies';
-import { ApplicationConfig, ExpressServer } from './server';
+import {oauth2ProfileFunction} from './authentication-strategies';
+import {ApplicationConfig, ExpressServer} from './server';
+loadEnv();
 
 export * from './server';
 

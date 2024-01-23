@@ -7,6 +7,9 @@
 
 # Keys/config
 oauth2-providers.json
+jwks/*.json
+jwks/*.key
+jwks/*.pub
 
 # Logs
 logs
