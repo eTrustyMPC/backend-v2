@@ -4,6 +4,7 @@ import {authenticate} from '@loopback/authentication';
 import {inject} from '@loopback/core';
 import {
   get,
+  post,
   Request,
   RequestBodyObject,
   RestBindings,
@@ -14,7 +15,7 @@ import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 
-const PRIVATE_KEY = fs.readFileSync(path.resolve('./jwks/rsa-2048-for-jwks.key'), "utf8"); //Buffer.from("TEST".toString(), 'utf8');
+const JWKS_PRIVATE_KEY = fs.readFileSync(path.resolve('./jwks/rsa-2048-for-jwks.key'), "utf8");
 
 const HEADER_SCHEMA: SchemaObject = {
   type: 'object',
@@ -25,7 +26,7 @@ const HEADER_SCHEMA: SchemaObject = {
 };
 
 const USER_PROFILE_RESPONSE: RequestBodyObject = {
-  description: 'Session user profile',
+  description: 'User profile',
   content: {
     'application/json': {
       schema: {
@@ -40,18 +41,21 @@ const USER_PROFILE_RESPONSE: RequestBodyObject = {
 };
 
 
+/**
+ * ThirdWeb integration: server-server auth
+ */
 export class AuthController {
   constructor(@inject(RestBindings.Http.REQUEST) private req: Request) { }
 
-  @get('/login', {
+  @post('/auth/login', {
     responses: {
       'default': {
-        description: 'JWT Auth Response',
+        description: 'JWT Token Response',
         content: {
           'application/json': {
             schema: {
               type: 'object',
-              title: 'JWT Auth token',
+              title: 'JWT Auth Token',
               properties: {
                 headers: HEADER_SCHEMA,
                 token: {type: 'string'}
@@ -63,6 +67,7 @@ export class AuthController {
     },
   })
   async login() {
+    // @todo: set up password validation
     const payload = {
       iss: "https://etrusty.io",
       sub: "777777", //user.id.toString(),
@@ -71,7 +76,7 @@ export class AuthController {
       exp: Math.floor(Date.now() / 1000) + 3600 * 7,
     };
 
-    const token = jwt.sign(payload, PRIVATE_KEY, {
+    const token = jwt.sign(payload, JWKS_PRIVATE_KEY, {
       algorithm: "RS256",
       keyid: "0",
     });
@@ -80,8 +85,9 @@ export class AuthController {
     };
   }
 
+  // @todo: set up JWT auth
   @authenticate('session')
-  @get('/whoAmI', {
+  @get('/auth/whoAmI', {
     responses: USER_PROFILE_RESPONSE,
   })
   whoAmI(@inject(SecurityBindings.USER) user: UserProfile): object {

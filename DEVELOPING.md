@@ -22,7 +22,26 @@ Install latest Postgres or run it using Docker:
 docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
 ```
 
-### Third Web Engine
+## Third Web
+
+### Auth
+
+Backend auth integrated with ThirdWeb accounts. All user profiles must be created as [Embedded Wallets](https://portal.thirdweb.com/wallets/embedded-wallet/overview). User wallet keys is stored on client side: <https://portal.thirdweb.com/wallets/embedded-wallet/how-it-works>
+
+- Custom JSON Web Token setup page: <https://thirdweb.com/dashboard/wallets/embedded>
+
+#### JWKS
+
+- Backend JWKS public key URL: <https://v2.api.etrusty.io/.well-known/jwks.json>
+- JWKS `aud` value: `eTrusty`
+- Backend JWT auth API: `/api/auth/login`, `/api/auth/whoAmI`
+
+#### OIDC
+
+- Custom auth OIDC config: <https://portal.thirdweb.com/wallets/embedded-wallet/custom-auth/configuration>
+- Custom auth server setup: <https://portal.thirdweb.com/wallets/embedded-wallet/custom-auth/custom-jwt-auth-server>
+
+### Engine
 
 Docs: <https://portal.thirdweb.com/engine>
 
@@ -40,7 +59,9 @@ docker run --name thirdweb_engine -d \
 
 Third Web engine uses Google Cloud KMS service: <https://portal.thirdweb.com/engine/backend-wallets#google-cloud-kms-wallet>
 
-### Google Cloud CLI
+## Google Cloud
+
+### CLI
 
 Docs: <https://cloud.google.com/sdk/docs/install>
 
