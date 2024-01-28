@@ -65,10 +65,10 @@ export class AuthController {
   async login() {
     const payload = {
       iss: "https://etrusty.io",
-      sub: 0,//user.id.toString(),
+      sub: "777777", //user.id.toString(),
       aud: "eTrusty",
       email: "test@example.com", //user.email,
-      exp: Math.floor(Date.now() / 1000) + 3600,
+      exp: Math.floor(Date.now() / 1000) + 3600 * 7,
     };
 
     const token = jwt.sign(payload, PRIVATE_KEY, {
