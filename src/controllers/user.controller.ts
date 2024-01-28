@@ -1,8 +1,3 @@
-// Copyright IBM Corp. and LoopBack contributors 2020. All Rights Reserved.
-// Node module: @loopback/example-passport-login
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
 import {authenticate} from '@loopback/authentication';
 import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
@@ -50,7 +45,7 @@ export class UserLoginController {
     public userCredentialsRepository: UserCredentialsRepository,
     @repository(UserIdentityRepository)
     public userIdentityRepository: UserIdentityRepository,
-  ) {}
+  ) { }
 
   @post('/signup')
   async signup(
