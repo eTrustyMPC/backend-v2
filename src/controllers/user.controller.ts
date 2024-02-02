@@ -19,7 +19,7 @@ import {UserIdentityRepository} from '../repositories/user-identity.repository';
 export type Credentials = {
   email: string;
   password: string;
-  name: string;
+  name?: string | undefined;
 };
 
 const CredentialsSchema: SchemaObject = {
