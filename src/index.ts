@@ -24,8 +24,8 @@ export async function serverConfig(
     rest: {
       port: +(process.env.PORT ?? 3000),
       host: process.env.HOST,
-      protocol: 'http',
-      gracePeriodForClose: 5000, // 5 seconds
+      //protocol: 'http',
+      gracePeriodForClose: 10000, // 10 seconds
       openApiSpec: {
         setServersFromRequest: true,
       },
@@ -81,9 +81,9 @@ export async function startApplication(
  * run main() to start application with oauth config
  */
 export async function main() {
-  console.log(`process.env.OAUTH_PROVIDERS_LOCATION=${process.env.OAUTH_PROVIDERS_LOCATION}`)
-  console.log(`process.env.HOST=${process.env.HOST}`)
-  console.log(`process.env.PORT=${process.env.PORT}`)
+  //console.log(`process.env.OAUTH_PROVIDERS_LOCATION=${process.env.OAUTH_PROVIDERS_LOCATION}`)
+  //console.log(`process.env.HOST=${process.env.HOST}`)
+  //console.log(`process.env.PORT=${process.env.PORT}`)
   let oauth2Providers;
   if (process.env.OAUTH_PROVIDERS_LOCATION) {
     oauth2Providers = require(process.env.OAUTH_PROVIDERS_LOCATION);

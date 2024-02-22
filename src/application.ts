@@ -4,6 +4,10 @@
 // License text available at https://opensource.org/licenses/MIT
 
 import {AuthenticationComponent} from '@loopback/authentication';
+import {
+  //JWTAuthenticationComponent,
+  SECURITY_SCHEME_SPEC,
+} from '@loopback/authentication-jwt';
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
@@ -18,15 +22,15 @@ import {config as loadEnv} from "dotenv";
 import {MySequence} from './sequence';
 loadEnv();
 
-export class OAuth2LoginApplication extends BootMixin(
+export class ETrustyApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
 
-    // Set up the custom sequence
+    // Set up the request middleware sequence
     this.sequence(MySequence);
-
+    // Set up Authentication core
     this.component(AuthenticationComponent);
 
     // REST
@@ -47,5 +51,25 @@ export class OAuth2LoginApplication extends BootMixin(
         nested: true,
       },
     };
+  }
+
+  addSecuritySpec(): void {
+    this.api({
+      openapi: '3.0.0',
+      info: {
+        title: 'eTrusty',
+        version: require('.././package.json').version,
+      },
+      paths: {},
+      components: {
+        securitySchemes: SECURITY_SCHEME_SPEC
+      },
+      security: [
+        {
+          jwt: [],
+        },
+      ],
+      servers: [{url: '/'}],
+    });
   }
 }

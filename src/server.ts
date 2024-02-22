@@ -9,7 +9,7 @@ import express from 'express';
 import http from 'http';
 import {AddressInfo} from 'net';
 import * as path from 'path';
-import {OAuth2LoginApplication} from './application';
+import {ETrustyApplication} from './application';
 
 export {ApplicationConfig};
 
@@ -25,7 +25,7 @@ export {ApplicationConfig};
  */
 export class ExpressServer {
   public webApp: express.Application;
-  public readonly lbApp: OAuth2LoginApplication;
+  public readonly lbApp: ETrustyApplication;
   private server?: http.Server;
   public url: String;
 
@@ -33,7 +33,7 @@ export class ExpressServer {
     // Express Web App
     this.webApp = require('../web-application/express-app');
     // LB4 App
-    this.lbApp = new OAuth2LoginApplication(options);
+    this.lbApp = new ETrustyApplication(options);
 
     /**
      * bind the oauth2 options to lb app
