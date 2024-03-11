@@ -49,7 +49,7 @@ export class ETrustyApplication extends BootMixin(
 
     // Customize @loopback/rest-explorer configuration here
     this.configure(RestExplorerBindings.COMPONENT).to({
-      path: '/explorer',
+      path: '/api/explorer',
     });
     // set up server default security rules
     this.addSecuritySpec();
