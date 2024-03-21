@@ -71,3 +71,6 @@ typings/
 
 # Emacs auto-save file
 \#*#
+
+# vscode
+.vscode

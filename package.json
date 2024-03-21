@@ -70,6 +70,7 @@
     "bcryptjs": "^2.4.3",
     "casbin": "^5.27.1",
     "debug": "^4.3.4",
+    "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",

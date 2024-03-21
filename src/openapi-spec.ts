@@ -1,5 +1,7 @@
 import {ApplicationConfig} from '@loopback/core';
+import {config as loadEnv} from "dotenv";
 import {ETrustyApplication} from './application';
+loadEnv();
 
 /**
  * Export the OpenAPI spec from the application

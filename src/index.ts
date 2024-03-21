@@ -1,4 +1,6 @@
+import {config as loadEnv} from "dotenv";
 import {ApplicationConfig, ETrustyApplication} from './application';
+loadEnv();
 
 export * from './application';
 

@@ -20,6 +20,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
+import {config as loadEnv} from "dotenv";
 import path from 'path';
 // @see https://github.com/casbin/node-casbin
 import {CasbinAuthorizationComponent} from './components/casbin-authorization';
@@ -32,6 +33,7 @@ import {MigrationComponent} from "loopback4-migration";
 import {MultiTenancyBindings} from './components/multi-tenancy';
 import {MultiTenancyComponent} from './components/multi-tenancy/component';
 import {MySequence} from './sequence';
+loadEnv();
 
 export {ApplicationConfig};
 
