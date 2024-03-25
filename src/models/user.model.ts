@@ -3,22 +3,12 @@ import {
 } from '@loopback/authentication-jwt';
 import {model, property} from '@loopback/repository';
 
-@model()
+@model({settings: {strict: true}})
 export class User extends BaseUser {
   @property({
     type: 'string',
   })
   tenantId?: string;
-
-  @property({
-    type: 'string',
-  })
-  firstName?: string;
-
-  @property({
-    type: 'string',
-  })
-  lastName?: string;
 
   constructor(data?: Partial<User>) {
     super(data);

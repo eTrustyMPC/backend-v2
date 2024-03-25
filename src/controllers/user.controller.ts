@@ -12,9 +12,8 @@ import {
   CountSchema,
   Filter,
   FilterExcludingWhere,
-  model, property,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
   del,
@@ -35,15 +34,6 @@ import {MultiTenancyBindings, Tenant} from '../components/multi-tenancy';
 import {User} from '../models';
 import {UserRepository} from '../repositories';
 
-@model()
-export class NewUserRequest extends User {
-  @property({
-    type: 'string',
-    required: true,
-  })
-  password: string;
-}
-
 const CredentialsSchema: SchemaObject = {
   type: 'object',
   required: ['email', 'password'],
@@ -54,7 +44,29 @@ const CredentialsSchema: SchemaObject = {
     },
     password: {
       type: 'string',
-      minLength: 8,
+    },
+  },
+};
+
+const UserResponseSchema: SchemaObject = {
+  type: 'object',
+  description: 'Created user',
+  properties: {
+    id: {
+      type: 'string',
+    },
+    email: {
+      type: 'string',
+    },
+  },
+};
+
+const UpdateUserRequestSchema: SchemaObject = {
+  type: 'object',
+  description: 'Updating user',
+  properties: {
+    email: {
+      type: 'string',
     },
   },
 };
@@ -138,28 +150,17 @@ export class UserController {
   @post('/signup', {
     responses: {
       '200': {
-        description: 'User',
+        description: 'Created user',
         content: {
           'application/json': {
-            schema: {
-              'x-ts-type': User,
-            },
+            schema: UserResponseSchema,
           },
         },
       },
     },
   })
   async signUp(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(NewUserRequest, {
-            title: 'NewUser',
-          }),
-        },
-      },
-    })
-    newUserRequest: NewUserRequest,
+    @requestBody(CredentialsRequestBody) newUserRequest: Credentials,
   ): Promise<User> {
     const password = await hash(newUserRequest.password, await genSalt());
     const savedUser = await this.userRepository.create(
@@ -176,7 +177,11 @@ export class UserController {
     responses: {
       '200': {
         description: 'User model instance',
-        content: {'application/json': {schema: getModelSchemaRef(User)}},
+        content: {
+          'application/json': {
+            schema: UserResponseSchema
+          }
+        },
       },
     },
   })
@@ -184,10 +189,7 @@ export class UserController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(User, {
-            title: 'NewUser',
-            exclude: ['id'],
-          }),
+          schema: CredentialsSchema,
         },
       },
     })
@@ -224,7 +226,7 @@ export class UserController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(User, {includeRelations: true}),
+              items: UserResponseSchema,
             },
           },
         },
@@ -236,36 +238,16 @@ export class UserController {
   }
 
   @authenticate('jwt')
-  @patch('/users', {
-    responses: {
-      '200': {
-        description: 'User PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
-      },
-    },
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(User, {partial: true}),
-        },
-      },
-    })
-    user: User,
-    @param.where(User) where?: Where<User>,
-  ): Promise<Count> {
-    return this.userRepository.updateAll(user, where);
-  }
-
-  @authenticate('jwt')
   @get('/users/{id}', {
     responses: {
       '200': {
         description: 'User model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(User, {includeRelations: true}),
+            schema: getModelSchemaRef(User, {
+              includeRelations: true,
+              exclude: ['realm', 'tenantId', 'emailVerified', 'verificationToken', 'username', 'userCredentials']
+            }),
           },
         },
       },
@@ -283,6 +265,11 @@ export class UserController {
     responses: {
       '204': {
         description: 'User PATCH success',
+        content: {
+          'application/json': {
+            schema: UserResponseSchema,
+          },
+        },
       },
     },
   })
@@ -291,7 +278,7 @@ export class UserController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(User, {partial: true}),
+          schema: UpdateUserRequestSchema,
         },
       },
     })
@@ -305,12 +292,23 @@ export class UserController {
     responses: {
       '204': {
         description: 'User PUT success',
+        content: {
+          'application/json': {
+            schema: UserResponseSchema,
+          },
+        },
       },
     },
   })
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() user: User,
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: UpdateUserRequestSchema,
+        },
+      },
+    }) user: User,
   ): Promise<void> {
     await this.userRepository.replaceById(id, user);
   }
