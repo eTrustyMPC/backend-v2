@@ -16,6 +16,8 @@ import { ServiceMixin } from '@loopback/service-proxy';
 import path from 'path';
 import { DbDataSource } from './datasources';
 import { MySequence } from './sequence';
+import { config as loadEnv } from "dotenv";
+loadEnv();
 export { ApplicationConfig };
 
 export class ETrustyApplication extends BootMixin(
@@ -32,7 +34,7 @@ export class ETrustyApplication extends BootMixin(
 
     // Customize @loopback/rest-explorer configuration here
     this.configure(RestExplorerBindings.COMPONENT).to({
-      path: '/explorer',
+      path: '/api/explorer',
     });
     this.component(RestExplorerComponent);
 

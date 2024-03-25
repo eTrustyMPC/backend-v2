@@ -1,5 +1,6 @@
 import { ApplicationConfig, ETrustyApplication } from './application';
-
+import { config as loadEnv } from "dotenv";
+loadEnv();
 export { ETrustyApplication };
 
 export async function main(options: ApplicationConfig = {}) {
@@ -23,7 +24,7 @@ if (require.main === module) {
       // (don't force-close). If you want to immediately destroy all sockets
       // upon stop, set its value to `0`.
       // See https://www.npmjs.com/package/stoppable
-      gracePeriodForClose: 5000, // 5 seconds
+      gracePeriodForClose: 10000, // 10 seconds
       openApiSpec: {
         // useful when used with OpenAPI-to-GraphQL to locate your application
         setServersFromRequest: true,
