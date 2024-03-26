@@ -69,6 +69,7 @@
     "@ts4ocds/utils": "^1.1.0",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
+    "bson": "^6.5.0",
     "casbin": "^5.27.1",
     "debug": "^4.3.4",
     "dotenv": "^16.4.5",
