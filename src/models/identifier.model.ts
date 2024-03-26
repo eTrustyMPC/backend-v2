@@ -1,10 +1,14 @@
 import { Entity, model, property } from '@loopback/repository';
 import { ObjectId } from 'bson';
+import { OcdsSchemaParserService } from '../services';
+
+const schemaParser = new OcdsSchemaParserService();
 
 @model({
   settings: {
     strict: true
-  }
+  },
+  ...schemaParser.getModelMetadata('Identifier'),
 })
 export class Identifier extends Entity {
   @property({
@@ -17,16 +21,19 @@ export class Identifier extends Entity {
 
   @property({
     type: 'string',
+    ...schemaParser.getPropertyMetadata('Identifier', 'scheme'),
   })
-  schema?: string;
+  scheme?: string;
 
   @property({
     type: 'string',
+    ...schemaParser.getPropertyMetadata('Identifier', 'legalName'),
   })
   legalName?: string;
 
   @property({
     type: 'string',
+    ...schemaParser.getPropertyMetadata('Identifier', 'uri'),
   })
   uri?: string;
 
