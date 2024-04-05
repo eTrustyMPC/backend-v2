@@ -1,5 +1,5 @@
 import { injectable, /* inject, */ BindingScope } from '@loopback/core';
-import * as releaseSchema from './data/release-schema.json';
+import * as releaseSchema from './data/release-schema-eu.json';
 import _ from 'lodash';
 
 export interface OcdsModelMetadata {
