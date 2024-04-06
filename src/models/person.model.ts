@@ -1,59 +1,64 @@
 import { Entity, model, property } from '@loopback/repository';
+import { ObjectId } from 'bson';
 import { Address } from './address.model';
 import { Identifier } from './identifier.model';
 import { OcdsSchemaParserService } from '../services';
 
-const schemaParser = new OcdsSchemaParserService();
+const schemaParser = new OcdsSchemaParserService('Person');
 
-@model()
+@model({
+  ...schemaParser.getModelMetadata(),
+})
 export class Person extends Entity {
   @property({
     type: 'string',
     id: true,
     generated: false,
+    default: () => (new ObjectId()).toString(),
+    ...schemaParser.getPropertyMetadata('id'),
   })
   id?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('Person', 'name'),
+    ...schemaParser.getPropertyMetadata('name'),
   })
   name?: string;
 
   @property({
     type: Identifier,
-    ...schemaParser.getPropertyMetadata('Person', 'identifier'),
+    ...schemaParser.getPropertyMetadata('identifier'),
   })
   identifier?: Identifier;
 
   @property({
     type: 'array',
     itemType: 'string',
-    ...schemaParser.getPropertyMetadata('Person', 'nationalities'),
+    ...schemaParser.getPropertyMetadata('nationalities'),
   })
   nationalities?: string[];
 
   @property({
     type: Address,
-    ...schemaParser.getPropertyMetadata('Person', 'address'),
+    ...schemaParser.getPropertyMetadata('address'),
   })
   address?: Address;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('Person', 'email'),
+    ...schemaParser.getPropertyMetadata('email'),
   })
   email?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('Person', 'faxNumber'),
+    ...schemaParser.getPropertyMetadata('faxNumber'),
   })
   faxNumber?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('Person', 'telephone'),
+    ...schemaParser.getPropertyMetadata('telephone'),
   })
   telephone?: string;
 

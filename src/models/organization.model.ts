@@ -1,15 +1,12 @@
 import { Entity, model, property, belongsTo } from '@loopback/repository';
 import { ObjectId } from 'bson';
-import { Identifier } from './identifier.model';
+import { Identifier, IdentifierWithRelations } from './identifier.model';
 import { OcdsSchemaParserService } from '../services';
 
-const schemaParser = new OcdsSchemaParserService();
+const schemaParser = new OcdsSchemaParserService('Organization');
 
 @model({
-  settings: {
-    strict: true
-  },
-  ...schemaParser.getModelMetadata('Organization'),
+  ...schemaParser.getModelMetadata(),
 })
 export class Organization extends Entity {
   @property({
@@ -17,18 +14,20 @@ export class Organization extends Entity {
     id: true,
     generated: false,
     default: () => (new ObjectId()).toString(),
+    ...schemaParser.getPropertyMetadata('id'),
   })
   id?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('Organization', 'name'),
+    index: true,
+    ...schemaParser.getPropertyMetadata('name'),
   })
   name?: string;
 
   @property({
     type: 'object',
-    ...schemaParser.getPropertyMetadata('Organization', 'details'),
+    ...schemaParser.getPropertyMetadata('details'),
   })
   details?: object;
 
@@ -41,7 +40,7 @@ export class Organization extends Entity {
 }
 
 export interface OrganizationRelations {
-  // describe navigational properties here
+  identifier: IdentifierWithRelations;
 }
 
 export type OrganizationWithRelations = Organization & OrganizationRelations;

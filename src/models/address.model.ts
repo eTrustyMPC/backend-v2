@@ -1,44 +1,45 @@
 import { Model, model, property } from '@loopback/repository';
 import { OcdsSchemaParserService } from '../services';
 
-const schemaParser = new OcdsSchemaParserService();
+const schemaParser = new OcdsSchemaParserService('Address');
 
-@model()
+@model({
+  ...schemaParser.getModelMetadata(),
+})
 export class Address extends Model {
-
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('Address', 'streetAddress'),
+    ...schemaParser.getPropertyMetadata('streetAddress'),
   })
   streetAddress?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('Address', 'locality'),
+    ...schemaParser.getPropertyMetadata('locality'),
   })
   locality?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('Address', 'region'),
+    ...schemaParser.getPropertyMetadata('region'),
   })
   region?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('Address', 'postalCode'),
+    ...schemaParser.getPropertyMetadata('postalCode'),
   })
   postalCode?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('Address', 'countryName'),
+    ...schemaParser.getPropertyMetadata('countryName'),
   })
   countryName?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('Address', 'country'),
+    ...schemaParser.getPropertyMetadata('country'),
   })
   country?: string;
 

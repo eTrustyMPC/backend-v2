@@ -1,37 +1,39 @@
 import { Model, model, property } from '@loopback/repository';
 import { OcdsSchemaParserService } from '../services';
 
-const schemaParser = new OcdsSchemaParserService();
+const schemaParser = new OcdsSchemaParserService('ContactPoint');
 
-@model()
+@model({
+  ...schemaParser.getModelMetadata(),
+})
 export class ContactPoint extends Model {
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('ContactPoint', 'name'),
+    ...schemaParser.getPropertyMetadata('name'),
   })
   name?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('ContactPoint', 'email'),
+    ...schemaParser.getPropertyMetadata('email'),
   })
   email?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('ContactPoint', 'telephone'),
+    ...schemaParser.getPropertyMetadata('telephone'),
   })
   telephone?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('ContactPoint', 'faxNumber'),
+    ...schemaParser.getPropertyMetadata('faxNumber'),
   })
   faxNumber?: string;
 
   @property({
     type: 'string',
-    ...schemaParser.getPropertyMetadata('ContactPoint', 'url'),
+    ...schemaParser.getPropertyMetadata('url'),
   })
   url?: string;
 

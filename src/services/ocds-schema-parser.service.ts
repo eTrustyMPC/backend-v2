@@ -1,29 +1,14 @@
-import { injectable, /* inject, */ BindingScope } from '@loopback/core';
+import { injectable, /*inject, */BindingScope } from '@loopback/core';
+import { ModelDefinition, PropertyDefinition } from '@loopback/repository';
 import * as releaseSchema from './data/release-schema-eu.json';
 import _ from 'lodash';
 
-export interface OcdsModelMetadata {
-  title?: string;
-  description?: string;
-}
-
-export interface OcdsPropertyMetadata {
-  title?: string;
-  description?: string;
-  type?: string;
-  items?: string;
-  enum?: string[];
-  '$ref'?: string;
-  required?: boolean;
-  uniqueItems?: boolean;
-  minimum: number;
-  maximum: number;
-}
-
 @injectable({ scope: BindingScope.TRANSIENT })
 export class OcdsSchemaParserService {
-  constructor(/* Add @inject to inject parameters */) {
+  protected defaultModel: string;
 
+  constructor(defaultModel: string) {
+    this.defaultModel = defaultModel;
   }
 
   /**
@@ -31,20 +16,38 @@ export class OcdsSchemaParserService {
    *
    * @param modelName OCDS model name
    */
-  public getModelMetadata(modelName: string): OcdsModelMetadata {
+  public getModelMetadata(modelName: string | undefined = undefined): Partial<ModelDefinition> {
+    if (!modelName) {
+      modelName = this.defaultModel;
+    }
     if (!_.has(releaseSchema.definitions, modelName)) {
       throw new Error(`model ${modelName} not found in definition list`)
     }
+    const modelDefinition = {
+      ..._.pick(_.get(releaseSchema.definitions, modelName), [
+        'title',
+        'description',
+        'required'
+      ]),
+      settings: {
+        strict: true,
+        forceId: true,
+        strictObjectIDCoercion: true,
+        title: _.get(releaseSchema.definitions, `${modelName}.title`),
+        description: _.get(releaseSchema.definitions, `${modelName}.description`),
+      },
+      jsonSchema: _.pick(_.get(releaseSchema.definitions, modelName), [
+        'title',
+        'description',
+        'required',
+        'patternProperties',
+        'dependentRequired',
+        'minProperties',
+        'maxProperties',
+      ]),
+    };
 
-    return _.pick(_.get(releaseSchema.definitions, modelName), [
-      'title',
-      'description',
-      'required',
-      'patternProperties',
-      'dependentRequired',
-      'minProperties',
-      'maxProperties',
-    ]);
+    return modelDefinition;
   }
 
   /**
@@ -53,7 +56,10 @@ export class OcdsSchemaParserService {
    * @param modelName
    * @param propertyName
    */
-  public getPropertyMetadata(modelName: string, propertyName: string) {
+  public getPropertyMetadata(propertyName: string, modelName: string | undefined = undefined): Partial<PropertyDefinition> {
+    if (!modelName) {
+      modelName = this.defaultModel;
+    }
     if (!_.has(releaseSchema.definitions, modelName)) {
       throw new Error(`model ${modelName} not found in definition list`)
     }
@@ -61,14 +67,27 @@ export class OcdsSchemaParserService {
     if (!_.has(modelDefinition.properties, propertyName)) {
       throw new Error(`Property ${propertyName} not defined in ${modelName} definition`)
     }
+    const propertyDefinition = {
+      title: _.get(modelDefinition.properties[propertyName], 'title'),
+      description: _.get(modelDefinition.properties[propertyName], 'description'),
+      required: _.get(modelDefinition.properties[propertyName], 'required'),
+      jsonSchema: _.pick(_.get(modelDefinition.properties, propertyName), [
+        'type',
+        'title',
+        'description',
+        'required',
+        'format',
+        'enum',
+        'items',
+        '$ref',
+        'uniqueItems',
+        'minLength',
+        'maxLength',
+        'transform',
+      ]),
+    };
 
-    return _.pick(_.get(modelDefinition.properties, propertyName), [
-      'title',
-      'description',
-      'required',
-      'enum',
-      'items'
-    ]);
+    return propertyDefinition;
   }
 
 }
