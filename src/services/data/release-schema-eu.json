@@ -175,6 +175,181 @@
     "initiationType"
   ],
   "definitions": {
+    "Release": {
+      "title": "Schema for an Open Contracting Release",
+      "description": "Each release provides data about a single contracting process at a particular point in time. Releases can be used to notify users of new tenders, awards, contracts and other updates. Releases may repeat or update information provided previously in this contracting process. One contracting process may have many releases. A 'record' of a contracting process follows the same structure as a release, but combines information from multiple points in time into a single summary.",
+      "type": "object",
+      "properties": {
+        "ocid": {
+          "title": "Open Contracting ID",
+          "description": "A globally unique identifier for this Open Contracting Process. Composed of an ocid prefix and an identifier for the contracting process. For more information see the [Open Contracting Identifier guidance](https://standard.open-contracting.org/1.1/en/schema/identifiers/)",
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "title": "Release ID",
+          "description": "An identifier for this particular release of information. A release identifier must be unique within the scope of its related contracting process (defined by a common ocid). A release identifier must not contain the # character.",
+          "type": "string",
+          "minLength": 1,
+          "omitWhenMerged": true
+        },
+        "date": {
+          "title": "Release Date",
+          "description": "The date on which the information contained in the release was first recorded in, or published by, any system.",
+          "type": "string",
+          "format": "date-time",
+          "omitWhenMerged": true
+        },
+        "tag": {
+          "title": "Release Tag",
+          "description": "One or more values from the closed [releaseTag](https://standard.open-contracting.org/1.1/en/schema/codelists/#release-tag) codelist. Tags can be used to filter releases and to understand the kind of information that releases might contain.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "planning",
+              "planningUpdate",
+              "tender",
+              "tenderAmendment",
+              "tenderUpdate",
+              "tenderCancellation",
+              "award",
+              "awardUpdate",
+              "awardCancellation",
+              "contract",
+              "contractUpdate",
+              "contractAmendment",
+              "implementation",
+              "implementationUpdate",
+              "contractTermination",
+              "compiled"
+            ]
+          },
+          "codelist": "releaseTag.csv",
+          "openCodelist": false,
+          "minItems": 1,
+          "omitWhenMerged": true
+        },
+        "initiationType": {
+          "title": "Initiation type",
+          "description": "The type of initiation process used for this contract, from the closed [initiationType](https://standard.open-contracting.org/1.1/en/schema/codelists/#initiation-type) codelist.",
+          "type": "string",
+          "enum": [
+            "tender"
+          ],
+          "codelist": "initiationType.csv",
+          "openCodelist": false
+        },
+        "parties": {
+          "title": "Parties",
+          "description": "Information on the parties (organizations, economic operators and other participants) who are involved in the contracting process and their roles, e.g. buyer, procuring entity, supplier etc. Organization references elsewhere in the schema are used to refer back to this entries in this list.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Organization"
+          },
+          "uniqueItems": true
+        },
+        "buyer": {
+          "title": "Buyer",
+          "description": "A buyer is an entity whose budget will be used to pay for goods, works or services related to a contract. This may be different from the procuring entity who may be specified in the tender data.",
+          "$ref": "#/definitions/OrganizationReference"
+        },
+        "planning": {
+          "title": "Planning",
+          "description": "Information from the planning phase of the contracting process. This includes information related to the process of deciding what to contract, when and how.",
+          "$ref": "#/definitions/Planning"
+        },
+        "tender": {
+          "title": "Tender",
+          "description": "The activities undertaken in order to enter into a contract.",
+          "$ref": "#/definitions/Tender"
+        },
+        "awards": {
+          "title": "Awards",
+          "description": "Information from the award phase of the contracting process. There can be more than one award per contracting process e.g. because the contract is split among different providers, or because it is a standing offer.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Award"
+          },
+          "uniqueItems": true
+        },
+        "contracts": {
+          "title": "Contracts",
+          "description": "Information from the contract creation phase of the procurement process.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Contract"
+          },
+          "uniqueItems": true
+        },
+        "language": {
+          "title": "Release language",
+          "description": "The default language of the data using either two-letter [ISO639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes), or extended [BCP47 language tags](http://www.w3.org/International/articles/language-tags/). The use of lowercase two-letter codes from [ISO639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) is recommended.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": "en"
+        },
+        "relatedProcesses": {
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/RelatedProcess"
+          },
+          "description": "The details of related processes: for example, if this process follows on from one or more other processes, represented under a separate open contracting identifier (ocid). This is commonly used to relate mini-competitions to their parent frameworks or individual tenders to a broader planning process.",
+          "title": "Related processes",
+          "type": "array"
+        },
+        "bids": {
+          "title": "Bids",
+          "description": "The bid section is used to publish summary statistics, and where applicable, individual bid information.",
+          "$ref": "#/definitions/Bids"
+        },
+        "title": {
+          "title": "Title",
+          "description": "A overall title for this contracting process or release.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "title": "Description",
+          "description": "An overall description of this contracting process or release. This does not replace a detailed breakdown of the objects of the contracting process in the planning, tender, award or contracts section.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "statistics": {
+          "title": "Statistics",
+          "description": "Statistics about the contracting process.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Statistic"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "withheldInformation": {
+          "title": "Withheld information",
+          "description": "Details of items of information whose publication is temporarily or permanently withheld.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WithheldInformationItem"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "ocid",
+        "id",
+        "date",
+        "tag",
+        "initiationType"
+      ]
+    },
     "Planning": {
       "title": "Planning",
       "description": "Information from the planning phase of the contracting process. Note that many other fields can be filled in a planning release, in the appropriate fields in other schema sections; these would likely be estimates at this stage, e.g. value in tender.",
