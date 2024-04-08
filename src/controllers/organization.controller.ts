@@ -17,19 +17,19 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import { Organization, Identifier } from '../models';
-import { OrganizationRepository } from '../repositories';
+import {Organization} from '../models';
+import {OrganizationRepository} from '../repositories';
 
 export class OrganizationController {
   constructor(
     @repository(OrganizationRepository)
-    public organizationRepository: OrganizationRepository,
-  ) { }
+    public organizationRepository : OrganizationRepository,
+  ) {}
 
   @post('/organizations')
   @response(200, {
     description: 'Organization model instance',
-    content: { 'application/json': { schema: getModelSchemaRef(Organization) } },
+    content: {'application/json': {schema: getModelSchemaRef(Organization)}},
   })
   async create(
     @requestBody({
@@ -50,7 +50,7 @@ export class OrganizationController {
   @get('/organizations/count')
   @response(200, {
     description: 'Organization model count',
-    content: { 'application/json': { schema: CountSchema } },
+    content: {'application/json': {schema: CountSchema}},
   })
   async count(
     @param.where(Organization) where?: Where<Organization>,
@@ -65,7 +65,7 @@ export class OrganizationController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Organization, { includeRelations: true }),
+          items: getModelSchemaRef(Organization, {includeRelations: true}),
         },
       },
     },
@@ -79,13 +79,13 @@ export class OrganizationController {
   @patch('/organizations')
   @response(200, {
     description: 'Organization PATCH success count',
-    content: { 'application/json': { schema: CountSchema } },
+    content: {'application/json': {schema: CountSchema}},
   })
   async updateAll(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Organization, { partial: true }),
+          schema: getModelSchemaRef(Organization, {partial: true}),
         },
       },
     })
@@ -100,13 +100,13 @@ export class OrganizationController {
     description: 'Organization model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Organization, { includeRelations: true }),
+        schema: getModelSchemaRef(Organization, {includeRelations: true}),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Organization, { exclude: 'where' }) filter?: FilterExcludingWhere<Organization>
+    @param.filter(Organization, {exclude: 'where'}) filter?: FilterExcludingWhere<Organization>
   ): Promise<Organization> {
     return this.organizationRepository.findById(id, filter);
   }
@@ -120,7 +120,7 @@ export class OrganizationController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Organization, { partial: true }),
+          schema: getModelSchemaRef(Organization, {partial: true}),
         },
       },
     })
@@ -146,25 +146,5 @@ export class OrganizationController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.organizationRepository.deleteById(id);
-  }
-
-  /// RELATIONS ///
-
-  @get('/organizations/{id}/identifier', {
-    responses: {
-      '200': {
-        description: 'Identifier belonging to Organization',
-        content: {
-          'application/json': {
-            schema: getModelSchemaRef(Identifier),
-          },
-        },
-      },
-    },
-  })
-  async getIdentifier(
-    @param.path.string('id') id: typeof Organization.prototype.id,
-  ): Promise<Identifier> {
-    return this.organizationRepository.identifier(id);
   }
 }
