@@ -21,21 +21,24 @@ yarn install
 ## Run the application
 
 ```sh
-yarn start
+yarn run start
 ```
 
 ## Other useful commands
 
-- `npm run migrate`: Migrate database schemas for models
-- `npm run openapi-spec`: Generate OpenAPI spec into a file
-- `npm run docker:build`: Build a Docker image for this application
-- `npm run docker:run`: Run this application inside a Docker container
+- `yarn run rebuild`: Force full project build
+- `yarn run migrate`: Migrate database schemas for models
+- `yarn run openapi-spec`: Generate OpenAPI spec into a file
 
 ## Tests
 
 ```sh
-npm test
+yarn run test
 ```
+
+### Testing repositories
+
+- Docs: <https://github.com/loopbackio/loopback-next/tree/master/packages/repository-tests>
 
 ## Modules
 
