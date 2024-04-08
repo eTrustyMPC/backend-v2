@@ -1,13 +1,15 @@
 import { Entity, model, property } from '@loopback/repository';
 import { ObjectId } from 'bson';
 import { OcdsSchemaParserService } from '../services';
+import { Identifier as IdentifierBase } from '@ts4ocds/core/organization';
+export interface OcdsIdentifier extends IdentifierBase { }
 
 const schemaParser = new OcdsSchemaParserService('Identifier');
 
 @model({
   ...schemaParser.getModelMetadata(),
 })
-export class Identifier extends Entity {
+export class Identifier extends Entity implements OcdsIdentifier {
   @property({
     type: 'string',
     id: true,

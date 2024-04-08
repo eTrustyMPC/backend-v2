@@ -1,7 +1,7 @@
-import { Entity, model, property } from '@loopback/repository';
+import { Entity, hasOne, model, property } from '@loopback/repository';
 import { ObjectId } from 'bson';
 import { Address } from './address.model';
-import { Identifier } from './identifier.model';
+import { Identifier, IdentifierWithRelations } from './identifier.model';
 import { OcdsSchemaParserService } from '../services';
 
 const schemaParser = new OcdsSchemaParserService('Person');
@@ -21,19 +21,20 @@ export class Person extends Entity {
 
   @property({
     type: 'string',
+    index: true,
     ...schemaParser.getPropertyMetadata('name'),
   })
   name?: string;
 
-  @property({
-    type: Identifier,
-    ...schemaParser.getPropertyMetadata('identifier'),
-  })
+  @hasOne(
+    () => Identifier,
+  )
   identifier?: Identifier;
 
   @property({
     type: 'array',
     itemType: 'string',
+    index: true,
     ...schemaParser.getPropertyMetadata('nationalities'),
   })
   nationalities?: string[];
@@ -46,18 +47,21 @@ export class Person extends Entity {
 
   @property({
     type: 'string',
+    index: true,
     ...schemaParser.getPropertyMetadata('email'),
   })
   email?: string;
 
   @property({
     type: 'string',
+    index: true,
     ...schemaParser.getPropertyMetadata('faxNumber'),
   })
   faxNumber?: string;
 
   @property({
     type: 'string',
+    index: true,
     ...schemaParser.getPropertyMetadata('telephone'),
   })
   telephone?: string;
@@ -68,7 +72,7 @@ export class Person extends Entity {
 }
 
 export interface PersonRelations {
-  // describe navigational properties here
+  identifier: IdentifierWithRelations;
 }
 
 export type PersonWithRelations = Person & PersonRelations;

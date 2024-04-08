@@ -89,5 +89,25 @@ export class OcdsSchemaParserService {
 
     return propertyDefinition;
   }
+}
 
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/prefer-nullish-coalescing */
+/**
+ * TypeScript Mixin classes constructor
+ * @see https://www.typescriptlang.org/docs/handbook/mixins.html#alternative-pattern
+ *
+ * @param derivedCtor
+ * @param constructors
+ */
+export function applyMixins(derivedCtor: any, constructors: any[]) {
+  constructors.forEach((baseCtor) => {
+    Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
+      Object.defineProperty(
+        derivedCtor.prototype,
+        name,
+        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
+        Object.create(null)
+      );
+    });
+  });
 }

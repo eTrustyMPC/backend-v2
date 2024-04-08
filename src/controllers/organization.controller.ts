@@ -148,6 +148,8 @@ export class OrganizationController {
     await this.organizationRepository.deleteById(id);
   }
 
+  /// RELATIONS ///
+
   @get('/organizations/{id}/identifier', {
     responses: {
       '200': {
