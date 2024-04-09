@@ -52,7 +52,7 @@ export class Release extends Entity {
     index: true,
     ...schemaParser.getPropertyMetadata('tag'),
   })
-  tag: ReleaseTag;
+  tag: ReleaseTag[];
 
   @property({
     type: 'string',

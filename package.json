@@ -1,8 +1,12 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "etrusty-backend",
   "description": "Backend API Server based on Loopback 4.x",
   "version": "2.0.0",
   "private": true,
+  "publishConfig": {
+    "access": "restricted"
+  },
   "license": "UNLICENSED",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -40,9 +44,6 @@
     "release-dev": "npx semantic-release --branches=dev --no-ci",
     "release": "npx semantic-release --branches=main --no-ci"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@loopback/authentication": "^11.0.0",
     "@loopback/authentication-jwt": "^0.15.0",
@@ -52,6 +53,7 @@
     "@loopback/repository": "^7.0.0",
     "@loopback/repository-tests": "^0.24.0",
     "@loopback/rest": "^14.0.0",
+    "@loopback/rest-crud": "^0.18.0",
     "@loopback/rest-explorer": "^7.0.0",
     "@loopback/security": "^0.11.0",
     "@loopback/service-proxy": "^7.0.0",
@@ -87,12 +89,14 @@
     "@semantic-release/git": "^10.0.1",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/lodash": "^4.17.0",
+    "@types/mocha": "^10.0.6",
     "@types/node": "^16.18.91",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^7.0.0",
     "cz-git": "^1.9.0",
     "eslint": "^8.57.0",
+    "mocha": "^10.4.0",
     "semantic-release": "^22.0.5",
     "semantic-release-cli": "^5.4.4",
     "source-map-support": "^0.5.21",

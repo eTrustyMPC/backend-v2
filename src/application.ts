@@ -12,6 +12,8 @@ import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
+// @see https://github.com/loopbackio/loopback-next/tree/master/packages/rest-crud
+import { CrudRestComponent } from '@loopback/rest-crud';
 import { ServiceMixin } from '@loopback/service-proxy';
 import path from 'path';
 import { DbDataSource } from './datasources';
@@ -49,16 +51,15 @@ export class ETrustyApplication extends BootMixin(
       },
     };
 
-    // ------ ADD SNIPPET AT THE BOTTOM ---------
     // Mount authentication system
     this.component(AuthenticationComponent);
     // Mount jwt component
     this.component(JWTAuthenticationComponent);
     // Bind datasource
     this.dataSource(DbDataSource, UserServiceBindings.DATASOURCE_NAME);
-    // ------------- END OF SNIPPET -------------
-
-    //new
     this.bind(UserServiceBindings.USER_SERVICE).toClass(MyUserService);
+
+    // CRUD builder for REST API
+    this.component(CrudRestComponent);
   }
 }

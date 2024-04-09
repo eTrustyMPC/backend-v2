@@ -41,7 +41,8 @@ yarn run test
 
 ### Loopback testing tools
 
-- Docs: <https://github.com/loopbackio/loopback-next/tree/master/packages/testlab>
+- Main docs for testing Loopback app: <https://loopback.io/doc/en/lb4/Testing-your-application.html>
+- Loopback testlab extension docs: <https://github.com/loopbackio/loopback-next/tree/master/packages/testlab>
 
 ### Testing repositories
 
