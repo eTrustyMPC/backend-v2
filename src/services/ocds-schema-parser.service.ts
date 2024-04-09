@@ -74,6 +74,7 @@ export class OcdsSchemaParserService {
       jsonSchema: _.pick(_.get(modelDefinition.properties, propertyName), [
         'type',
         'title',
+        'default',
         'description',
         'required',
         'format',

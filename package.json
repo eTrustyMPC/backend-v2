@@ -27,6 +27,7 @@
     "eslint:fix": "yarn run eslint -- --fix",
     "pretest": "yarn run rebuild",
     "test": "lb-mocha \"dist/__tests__/**/*.js\"",
+    "pretest:dev": "yarn run pretest",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && yarn run posttest",
     "verify": "yarn pack && tar xf loopback-todo*.tgz && tree package && yarn run clean",
     "premigrate": "yarn run build ",
@@ -36,9 +37,10 @@
     "rebuild": "yarn run clean && yarn run build",
     "prestart": "yarn run rebuild",
     "start": "node .",
-    "start:dev": "nodemon . --watch dist/",
+    "prestart:dev": "yarn run prestart",
+    "start:dev": "nodemon . --watch",
     "commit": "(git add .) && cz && (git push -o ci.skip)",
-    "release-dev": "npx semantic-release --branches=dev --no-ci",
+    "release:dev": "npx semantic-release --branches=dev --no-ci",
     "release": "npx semantic-release --branches=main --no-ci"
   },
   "dependencies": {

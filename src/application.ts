@@ -22,9 +22,7 @@ import { config as loadEnv } from "dotenv";
 loadEnv();
 export { ApplicationConfig };
 
-export class ETrustyApplication extends BootMixin(
-  ServiceMixin(RepositoryMixin(RestApplication)),
-) {
+export class ETrustyApplication extends BootMixin(ServiceMixin(RepositoryMixin(RestApplication))) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
 
