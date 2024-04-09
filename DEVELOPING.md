@@ -52,7 +52,7 @@ All commits must follow [Conventional Commits](https://www.conventionalcommits.o
 Each commit must be performed using [commitizen cli](https://commitizen-tools.github.io/commitizen/):
 
 ```sh
-npm run commit
+yarn run commit
 ```
 
 ### Publishing Release
@@ -60,7 +60,7 @@ npm run commit
 Each release must be performed using npm command:
 
 ```sh
-npm run release
+yarn run release
 ```
 
 All releases are published into `main` branch.

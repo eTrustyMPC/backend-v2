@@ -32,9 +32,15 @@ yarn run start
 
 ## Tests
 
+Run tests:
+
 ```sh
 yarn run test
 ```
+
+### Loopback testing tools
+
+- Docs: <https://github.com/loopbackio/loopback-next/tree/master/packages/testlab>
 
 ### Testing repositories
 
