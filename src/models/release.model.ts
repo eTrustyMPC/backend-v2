@@ -1,8 +1,7 @@
 import { Entity, model, property } from '@loopback/repository';
 import { ObjectId } from 'bson';
 import { OcdsSchemaParserService } from '../services';
-//import { Identifier as IdentifierBase } from '@ts4ocds/core/organization';
-//export interface OcdsIdentifier extends IdentifierBase { }
+import { ReleaseTag } from '@ts4ocds/core';
 
 const schemaParser = new OcdsSchemaParserService('Release');
 
@@ -48,12 +47,12 @@ export class Release extends Entity {
   date?: string;
 
   @property({
-    type: 'string',
+    type: 'array',
     required: true,
     index: true,
     ...schemaParser.getPropertyMetadata('tag'),
   })
-  tag: string;
+  tag: ReleaseTag;
 
   @property({
     type: 'string',

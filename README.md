@@ -29,6 +29,7 @@ yarn run start
 - `yarn run rebuild`: Force full project build
 - `yarn run migrate`: Migrate database schemas for models
 - `yarn run openapi-spec`: Generate OpenAPI spec into a file
+- `(yarn upgrade --scope @loopback) && (yarn upgrade --scope @types) && (yarn upgrade --scope @thirdweb-dev)`: update core packages
 
 ## Tests
 
@@ -46,6 +47,6 @@ yarn run test
 
 - Docs: <https://github.com/loopbackio/loopback-next/tree/master/packages/repository-tests>
 
-## Modules
+## Other modules
 
-- Migration: <https://github.com/nflaig/loopback4-migration#update-directory-and-naming-convention>
+- TypeScript utility types: <https://github.com/piotrwitek/utility-types>
